@@ -2,38 +2,37 @@ package org.mobop.flatseeker;
 
 import android.app.ActionBar;
 import android.app.ActionBar.Tab;
-import android.app.Activity;
+import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
-import android.app.Notification.Action;
-import android.net.wifi.p2p.WifiP2pManager.ActionListener;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
-public class Main extends FragmentActivity implements ActionBar.TabListener {
-    ActionBar actionBar;
-    ViewPager viewPager;
-    FragmentPageAdapter ft;
+public class Main extends FragmentActivity implements TabListener {
+    private ActionBar actionBar;
+    private ViewPager viewPager;
+    private FragmentPageAdapter fpAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.main);
-
+	
+	fpAdapter = new FragmentPageAdapter(getSupportFragmentManager());
 	viewPager = (ViewPager) findViewById(R.id.pager);
-	ft = new FragmentPageAdapter(getSupportFragmentManager());
+	viewPager.setAdapter(fpAdapter);
 
 	actionBar = getActionBar();
-	viewPager.setAdapter(ft);
 	actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 	actionBar.addTab(actionBar.newTab().setText("Edit").setTabListener(this));
 	actionBar.addTab(actionBar.newTab().setText("List").setTabListener(this));
 	actionBar.addTab(actionBar.newTab().setText("Map").setTabListener(this));
 
+//	GoogleMap googleMap;
+//	googleMap = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+	
+	viewPager.requestTransparentRegion(viewPager);
 	viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
 	    @Override
@@ -49,6 +48,15 @@ public class Main extends FragmentActivity implements ActionBar.TabListener {
 	    public void onPageScrollStateChanged(int arg0) {
 	    }
 	});
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+	int id = item.getItemId();
+	if (id == R.id.action_settings) {
+	    return true;
+	}
+	return super.onOptionsItemSelected(item);
     }
 
     @Override

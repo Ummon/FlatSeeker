@@ -1,5 +1,7 @@
 package org.mobop.flatseeker;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -8,7 +10,6 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 
     public FragmentPageAdapter(FragmentManager fm) {
 	super(fm);
-	// TODO Auto-generated constructor stub
     }
 
     @Override
@@ -20,7 +21,8 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
 	case 1:
 	    return new ListFragment();
 	case 2:
-	    return new MapFragment();
+	    return SupportMapFragment.newInstance();
+//	    return new MapFragment();
 	default:
 	    break;
 	}

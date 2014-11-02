@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="unspecified" >
+        <source path="D:\android\WSMobile\FlatSeeker\build\intermediates\exploded-aar\WSMobile\appcompat_v7\unspecified\assets" />
+    </dataSet>
+    <dataSet config="unspecified" >
+        <source path="D:\android\WSMobile\FlatSeeker\build\intermediates\exploded-aar\WSMobile\google-play-services_lib\unspecified\assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="D:\android\WSMobile\FlatSeeker\assets" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="D:\android\WSMobile\FlatSeeker\build-types\debug\assets" />
+    </dataSet>
+
+</merger>

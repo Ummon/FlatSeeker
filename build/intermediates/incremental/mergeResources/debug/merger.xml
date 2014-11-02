@@ -18287,6 +18287,16 @@ bold
                 path="D:\android\WSMobile\FlatSeeker\res\layout\listrow_search.xml"
                 qualifiers=""
                 type="layout" />
+            <file
+                name="activity_note"
+                path="D:\android\WSMobile\FlatSeeker\res\layout\activity_note.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="menu_note"
+                path="D:\android\WSMobile\FlatSeeker\res\menu\menu_note.xml"
+                qualifiers=""
+                type="menu" />
         </source>
         <source path="D:\android\WSMobile\FlatSeeker\build\generated\res\rs\debug" />
         <source path="D:\android\WSMobile\FlatSeeker\build\generated\res\generated\debug" />

@@ -1,6 +1,7 @@
 package org.mobop.flatseeker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Flatseeker MobOp
@@ -18,6 +18,7 @@ import android.widget.Toast;
  */
 public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
+    public final static String EXTRA_MESSAGE = "org.mobop.flatseeker.MESSAGE";
     private final SparseArray<Group> groups;
     public LayoutInflater inflater;
     public Activity activity;
@@ -48,11 +49,15 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         }
         text = (TextView) convertView.findViewById(R.id.search_row);
         text.setText(children);
+
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, children,
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity, NoteActivity.class);
+                intent.putExtra(EXTRA_MESSAGE, children);
+                activity.startActivity(intent);
+//                Toast.makeText(activity, children,
+//                        Toast.LENGTH_SHORT).show();
             }
         });
         return convertView;

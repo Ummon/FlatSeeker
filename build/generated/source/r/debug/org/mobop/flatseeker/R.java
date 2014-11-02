@@ -1309,7 +1309,7 @@ containing a value of this type.
         public static final int powered_by_google_light=0x7f020077;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f07004f;
+        public static final int LinearLayout1=0x7f070050;
         public static final int action_bar=0x7f07002e;
         public static final int action_bar_activity_content=0x7f070026;
         public static final int action_bar_container=0x7f07002d;
@@ -1321,7 +1321,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070027;
         public static final int action_menu_presenter=0x7f070028;
         public static final int action_mode_close_button=0x7f070036;
-        public static final int action_settings=0x7f070052;
+        public static final int action_settings=0x7f070053;
         public static final int activity_chooser_view_content=0x7f070037;
         public static final int always=0x7f070012;
         public static final int beginning=0x7f07000a;
@@ -1350,7 +1350,7 @@ containing a value of this type.
         public static final int ifRoom=0x7f070011;
         public static final int image=0x7f070039;
         public static final int listMode=0x7f070001;
-        public static final int listView=0x7f070050;
+        public static final int listView=0x7f070051;
         public static final int list_item=0x7f07003b;
         public static final int match_parent=0x7f07001e;
         public static final int middle=0x7f07000b;
@@ -1358,7 +1358,8 @@ containing a value of this type.
         public static final int never=0x7f070010;
         public static final int none=0x7f070009;
         public static final int normal=0x7f070000;
-        public static final int pager=0x7f070051;
+        public static final int note_city_name=0x7f07004e;
+        public static final int pager=0x7f070052;
         public static final int production=0x7f070019;
         public static final int progress_circular=0x7f07002a;
         public static final int progress_horizontal=0x7f07002b;
@@ -1373,7 +1374,7 @@ containing a value of this type.
         public static final int search_go_btn=0x7f07004c;
         public static final int search_mag_icon=0x7f070047;
         public static final int search_plate=0x7f070048;
-        public static final int search_row=0x7f07004e;
+        public static final int search_row=0x7f07004f;
         public static final int search_src_text=0x7f070049;
         public static final int search_voice_btn=0x7f07004d;
         public static final int selectionDetails=0x7f07001d;
@@ -1422,19 +1423,21 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
         public static final int abc_simple_decor=0x7f030017;
-        public static final int edit_layout=0x7f030018;
-        public static final int list_layout=0x7f030019;
-        public static final int listrow_flat=0x7f03001a;
-        public static final int listrow_search=0x7f03001b;
-        public static final int main=0x7f03001c;
-        public static final int map_layout=0x7f03001d;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001e;
+        public static final int activity_note=0x7f030018;
+        public static final int edit_layout=0x7f030019;
+        public static final int list_layout=0x7f03001a;
+        public static final int listrow_flat=0x7f03001b;
+        public static final int listrow_search=0x7f03001c;
+        public static final int main=0x7f03001d;
+        public static final int map_layout=0x7f03001e;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
     }
     public static final class menu {
         public static final int list=0x7f0c0000;
         public static final int main=0x7f0c0001;
         public static final int map=0x7f0c0002;
-        public static final int note=0x7f0c0003;
+        public static final int menu_note=0x7f0c0003;
+        public static final int note=0x7f0c0004;
     }
     public static final class string {
         public static final int abc_action_bar_home_description=0x7f0a0000;

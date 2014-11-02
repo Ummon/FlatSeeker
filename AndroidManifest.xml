@@ -7,28 +7,33 @@
     <uses-sdk
         android:minSdkVersion="19"
         android:targetSdkVersion="19" />
-    
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-	<uses-feature
-    	android:glEsVersion="0x00020000"
-    	android:required="true"/>
-    
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-	   	<meta-data android:name="com.google.android.maps.v2.API_KEY"
-			android:value="AIzaSyBxD8Lp499uqUpTHHfNswPymH_Q7kNnczo"/>
-	    <meta-data
-			android:name="com.google.android.gms.version"
-			android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBxD8Lp499uqUpTHHfNswPymH_Q7kNnczo" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
-            android:name=".Main"
+            android:name="org.mobop.flatseeker.Main"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,15 +42,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListActivity"
-            android:label="@string/title_activity_list" >
-        </activity>
-        <activity
-            android:name=".MapActivity"
-            android:label="@string/title_activity_map" >
-        </activity>
-        <activity
-            android:name=".NoteActivity"
+            android:name="org.mobop.flatseeker.NoteActivity"
             android:label="@string/title_activity_note" >
         </activity>
     </application>

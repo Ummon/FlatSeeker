@@ -8,6 +8,10 @@ public class Search {
     public void delete() {
 
     }
+    
+    public SearchParams getParams(){
+        return params;
+    }
 
     SearchParams params;
 }

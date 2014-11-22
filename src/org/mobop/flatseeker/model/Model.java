@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Model {
+    public Model(){
+        searches = new ArrayList<Search>();
+    }
+    
     public Collection<Search> getSearchs() {
         return this.searches;
     }

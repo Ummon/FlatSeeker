@@ -4,35 +4,51 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.google.android.gms.maps.SupportMapFragment;
+import org.mobop.flatseeker.model.Model;
 
 public class FragmentPageAdapter extends FragmentPagerAdapter {
 
+    private EditFragment editFragment;
+    private SearchListFragment searchListFragment;
+    private MapFragment mapFragment;
+    private Model model;
+    
     public FragmentPageAdapter(FragmentManager fm) {
-	super(fm);
+        super(fm);
+        model = new Model();
     }
 
     @Override
     public Fragment getItem(int arg0) {
-
-	switch (arg0) {
-	case 0:
-	    return new EditFragment();
-	case 1:
-	    return new SearchListFragment();
-	case 2:
-	    return SupportMapFragment.newInstance();
-//	    return new MapFragment();
-	default:
-	    break;
-	}
-	return null;
+        
+        switch (arg0) {
+        case 0:
+            if(editFragment==null)
+                editFragment = new EditFragment(model);
+            return editFragment;
+        case 1:
+            if(searchListFragment==null)
+                searchListFragment = new SearchListFragment(model);
+            return searchListFragment;
+        case 2:
+    //	    return SupportMapFragment.newInstance();
+            if(mapFragment==null)
+                mapFragment = new MapFragment();
+            return mapFragment;
+        default:
+            break;
+        }
+        return null;
     }
 
     @Override
     public int getCount() {
 	// we got 3 fragments list/map/edit
-	return 3;
+	    return 3;
     }
 
+    public void refresh() {
+        if(searchListFragment!=null)
+            searchListFragment.onResume();
+    }
 }

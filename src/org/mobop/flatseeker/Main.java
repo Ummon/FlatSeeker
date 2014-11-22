@@ -10,7 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import static org.mobop.flatseeker.R.menu.*;
+import static org.mobop.flatseeker.R.menu.main;
 
 public class Main extends FragmentActivity implements TabListener {
     private ActionBar actionBar;
@@ -71,6 +71,7 @@ public class Main extends FragmentActivity implements TabListener {
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
+        fpAdapter.refresh();
 	    viewPager.setCurrentItem(tab.getPosition());
     }
 

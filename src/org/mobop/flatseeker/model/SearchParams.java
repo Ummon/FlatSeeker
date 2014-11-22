@@ -16,6 +16,8 @@ public class SearchParams {
         this.numberOfRooms = numberOfRooms;
         this.size = size;
     }
+    
+    public String getCity(){return city;}
 
     String city;
     int range;

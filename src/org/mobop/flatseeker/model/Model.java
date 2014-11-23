@@ -17,6 +17,25 @@ public class Model {
         this.searches.add(s);
         return s;
     }
+    
+    //only for test purpose
+    public Search newSearchTEST(String town){
+        Search s = new Search(town);
+        this.searches.add(s);
+        return s;
+    }
+    
+    
+    //becarefull if try to add a search which isn't in the list searches
+    public void setActualSearch(Search actualSearch){
+//        if(searches.contains(searches) || actualSearch == null)
+            this.actualSearch = actualSearch;
+    }
+    
+    public Search getActualSearch(){
+        return actualSearch;
+    }
 
+    Search actualSearch;
     ArrayList<Search> searches;
 }

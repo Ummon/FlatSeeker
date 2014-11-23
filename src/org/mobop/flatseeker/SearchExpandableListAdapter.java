@@ -9,7 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
+
+import org.mobop.flatseeker.model.Model;
+import org.mobop.flatseeker.model.Search;
 
 /**
  * Flatseeker MobOp
@@ -19,14 +23,18 @@ import android.widget.TextView;
 public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
     public final static String EXTRA_MESSAGE = "org.mobop.flatseeker.MESSAGE";
-    private final SparseArray<Group> groups;
+    private final SparseArray<Search> groups;
     public LayoutInflater inflater;
     public Activity activity;
-
-    public SearchExpandableListAdapter(Fragment act, SparseArray<Group> groups) {
+    private static int searchSelected = -1;
+    private ExpandableListView mExpandableList;
+    private Model model;
+    
+    public SearchExpandableListAdapter(Fragment act, SparseArray<Search> groups, Model model) {
         activity = act.getActivity();
         this.groups = groups;
         inflater = activity.getLayoutInflater();
+        this.model = model;
     }
 
     @Override
@@ -81,11 +89,22 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public void onGroupCollapsed(int groupPosition) {
         super.onGroupCollapsed(groupPosition);
+        
+        if(groupPosition==searchSelected) {
+            searchSelected = -1;
+            model.setActualSearch(null);
+        }
     }
 
     @Override
     public void onGroupExpanded(int groupPosition) {
         super.onGroupExpanded(groupPosition);
+        
+        if(searchSelected !=-1){
+            mExpandableList.collapseGroup(searchSelected);
+        }
+        model.setActualSearch(groups.get(groupPosition));
+        searchSelected=groupPosition;
     }
 
     @Override
@@ -99,9 +118,10 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_search, null);
         }
-        Group group = (Group) getGroup(groupPosition);
-        ((CheckedTextView) convertView).setText(group.string);
+        Search group = (Search) getGroup(groupPosition);
+        ((CheckedTextView) convertView).setText(group.getParams().getCity());
         ((CheckedTextView) convertView).setChecked(isExpanded);
+        mExpandableList = (ExpandableListView) activity.findViewById(R.id.listView);
         return convertView;
     }
 

@@ -16,6 +16,9 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     public FragmentPageAdapter(FragmentManager fm) {
         super(fm);
         model = new Model();
+        model.newSearchTEST("Neuchatel");
+        model.newSearchTEST("Lausanne");
+        model.newSearchTEST("Zurich");
     }
 
     @Override
@@ -33,7 +36,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
         case 2:
     //	    return SupportMapFragment.newInstance();
             if(mapFragment==null)
-                mapFragment = new MapFragment();
+                mapFragment = new MapFragment(model);
             return mapFragment;
         default:
             break;
@@ -48,7 +51,10 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     }
 
     public void refresh() {
-        if(searchListFragment!=null)
+        if(searchListFragment!=null) 
             searchListFragment.onResume();
+        
+        if(mapFragment!=null) 
+            mapFragment.refreshPosition();
     }
 }

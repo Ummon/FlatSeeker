@@ -72,7 +72,7 @@ public class MapFragment extends Fragment {
             Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
 
             try {
-                List<Address> address = geoCoder.getFromLocationName(model.getActualSearch().getParams().getCity(), 10);
+                List<Address> address = geoCoder.getFromLocationName(model.getActualSearch().getParams().city, 10);
                 double latitude = address.get(0).getLatitude();
                 double longitude = address.get(0).getLongitude();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(

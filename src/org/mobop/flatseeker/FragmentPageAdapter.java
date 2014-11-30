@@ -16,9 +16,9 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     public FragmentPageAdapter(FragmentManager fm) {
         super(fm);
         model = new Model();
-        model.newSearchTEST("Neuchatel");
+        /*model.newSearchTEST("Neuchatel");
         model.newSearchTEST("Lausanne");
-        model.newSearchTEST("Zurich");
+        model.newSearchTEST("Zurich");*/
     }
 
     @Override

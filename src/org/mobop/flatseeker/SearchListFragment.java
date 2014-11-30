@@ -50,14 +50,14 @@ public class SearchListFragment extends Fragment {
         groups.clear();
         
 //        Group group = new Group("Neuchâtel");
-        Collection<Search> searches = model.getSearchs();
-        for (Search element : searches) {
+        Collection<Search> searches = model.getSearches();
+        /*for (Search element : searches) {
             element.children.clear();//TODO should remove
             for (int i = 0; i < 5; i++) {
                 element.children.add("Sub Item" + i);
             }
             groups.append(groups.size(), element);
-        }
+        }*/
 //        groups.append(groups.size(), new Group("proute"));
     }
 }

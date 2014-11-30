@@ -1,8 +1,12 @@
 package org.mobop.flatseeker.model;
 
-import java.util.Objects;
+public class SearchParams implements Cloneable {
+    public String city;
+    public int range;
+    public PriceRange priceRange;
+    public int numberOfRooms;
+    public int size;
 
-public class SearchParams {
     /**
      *
      * @param city
@@ -18,8 +22,10 @@ public class SearchParams {
         this.numberOfRooms = numberOfRooms;
         this.size = size;
     }
-    
-    public String getCity(){return city;}
+
+    public SearchParams clone() {
+        return new SearchParams(this.city, this.range, this.priceRange.clone(), this.numberOfRooms, this.size);
+    }
 
 //    @Override
 //    public boolean equals (Object a){
@@ -30,10 +36,4 @@ public class SearchParams {
 //        return city.equals(b.city )&& range == b.range && priceRange.from==b.priceRange.from &&
 //                priceRange.to==b.priceRange.to && numberOfRooms==b.numberOfRooms && size==b.size;
 //    }
-    
-    String city;
-    int range;
-    PriceRange priceRange;
-    int numberOfRooms;
-    int size;
 }

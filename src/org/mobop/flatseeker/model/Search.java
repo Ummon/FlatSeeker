@@ -1,21 +1,27 @@
 package org.mobop.flatseeker.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+/**
+ * To create a new search use 'Model.newSearch(..)'.
+ */
 public class Search {
-    protected Search(SearchParams params) {
-        this.params = params;
+    Model model;
+    SearchParams params;
+    ArrayList<Flat> result = new ArrayList<Flat>();
+
+    protected Search(Model model, SearchParams params) {
+        this.model = model;
+        this.setParams(params);
     }
 
-    //TODO ONLY FOR TEST
-    public Search(String town) {
-//        (String city, int range, PriceRange priceRange, int numberOfRooms, int size
-        this.params = new SearchParams(town,2,new PriceRange(1,10),2,20);
-    }
-
+    /**
+     * Delete the search. The associated blacklisted flats will stay as blacklisted.
+     */
     public void delete() {
-
+        this.model.removeSearch(this);
     }
     
 //    @Override
@@ -24,11 +30,32 @@ public class Search {
 //        if ( !(a instanceof SearchParams) ) return false;
 //        return this.params.equals(((Search)a).params);
 //    }
-    
-    public SearchParams getParams(){
-        return params;
+
+    public SearchParams getParams() {
+        return params.clone();
     }
 
-    public final List<String> children = new ArrayList<String>();
-    SearchParams params;
+    public void setParams(SearchParams params) {
+        if (params == null || params == this.params)
+            return;
+
+        this.params = params;
+        this.Update();
+    }
+
+    public Collection<Flat> getResult() {
+        return this.result;
+    }
+
+    public Flat getFlat(int index) {
+        return this.result.get(index);
+    }
+
+    /**
+     * Update synchronously the result. May take a little time.
+     * Automatically called for new search and when updating params with 'setParams(..)'.
+     */
+    public void Update() {
+
+    }
 }

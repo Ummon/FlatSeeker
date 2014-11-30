@@ -39,7 +39,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return groups.get(groupPosition).children.get(childPosition);
+        return groups.get(groupPosition).getFlat(childPosition);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return groups.get(groupPosition).children.size();
+        return groups.get(groupPosition).getResult().size();
     }
 
     @Override
@@ -119,7 +119,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = inflater.inflate(R.layout.listrow_search, null);
         }
         Search group = (Search) getGroup(groupPosition);
-        ((CheckedTextView) convertView).setText(group.getParams().getCity());
+        ((CheckedTextView) convertView).setText(group.getParams().city);
         ((CheckedTextView) convertView).setChecked(isExpanded);
         mExpandableList = (ExpandableListView) activity.findViewById(R.id.listView);
         return convertView;

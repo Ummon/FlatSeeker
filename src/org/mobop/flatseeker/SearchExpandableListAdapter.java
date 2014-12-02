@@ -92,7 +92,8 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         
         if(groupPosition==searchSelected) {
             searchSelected = -1;
-            model.setActualSearch(null);
+            // TODO
+            //model.setActualSearch(null);
         }
     }
 
@@ -100,10 +101,11 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     public void onGroupExpanded(int groupPosition) {
         super.onGroupExpanded(groupPosition);
         
-        if(searchSelected !=-1){
+        if (searchSelected != -1) {
             mExpandableList.collapseGroup(searchSelected);
         }
-        model.setActualSearch(groups.get(groupPosition));
+        // TODO.
+        // model.setActualSearch(groups.get(groupPosition));
         searchSelected=groupPosition;
     }
 

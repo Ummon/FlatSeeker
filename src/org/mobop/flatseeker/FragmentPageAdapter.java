@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import org.mobop.flatseeker.model.Model;
+import org.mobop.flatseeker.model.*;
 
 public class FragmentPageAdapter extends FragmentPagerAdapter {
 
@@ -15,7 +15,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     
     public FragmentPageAdapter(FragmentManager fm) {
         super(fm);
-        model = new Model();
+        model = new Model(new StubFinder());
         /*model.newSearchTEST("Neuchatel");
         model.newSearchTEST("Lausanne");
         model.newSearchTEST("Zurich");*/

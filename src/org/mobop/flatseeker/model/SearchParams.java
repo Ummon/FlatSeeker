@@ -2,29 +2,29 @@ package org.mobop.flatseeker.model;
 
 public class SearchParams implements Cloneable {
     public String city;
-    public int range;
-    public PriceRange priceRange;
-    public int numberOfRooms;
-    public int size;
+    public int radius; // [m].
+    public Range<Integer> price;
+    public Range<Double> numberOfRooms;
+    public Range<Integer> size;
 
     /**
      *
      * @param city
      * @param rang [km]
-     * @param priceRange
+     * @param price
      * @param numberOfRooms
      * @param size [m²]
      */
-    public SearchParams(String city, int range, PriceRange priceRange, int numberOfRooms, int size) {
+    public SearchParams(String city, int radius, Range<Integer> price, Range<Double> numberOfRooms, Range<Integer> size) {
         this.city = city;
-        this.range = range;
-        this.priceRange = priceRange;
+        this.radius = radius;
+        this.price = price;
         this.numberOfRooms = numberOfRooms;
         this.size = size;
     }
 
     public SearchParams clone() {
-        return new SearchParams(this.city, this.range, this.priceRange.clone(), this.numberOfRooms, this.size);
+        return new SearchParams(this.city, this.radius, this.price.clone(), this.numberOfRooms, this.size);
     }
 
 //    @Override

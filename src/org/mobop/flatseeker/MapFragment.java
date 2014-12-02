@@ -65,13 +65,15 @@ public class MapFragment extends Fragment {
     }
     
     public void refreshPosition(){
-        if(model.getActualSearch()!=null) {
+
+        /*if(model.getActualSearch()!=null)*/ {
 
 //            Toast.makeText(getActivity().getApplicationContext(), "froute", Toast.LENGTH_SHORT).show();
             
             Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
 
-            try {
+            // TODO
+            /*try {
                 List<Address> address = geoCoder.getFromLocationName(model.getActualSearch().getParams().city, 10);
                 double latitude = address.get(0).getLatitude();
                 double longitude = address.get(0).getLongitude();
@@ -79,7 +81,7 @@ public class MapFragment extends Fragment {
                         new LatLng(latitude, longitude), 16));
             } catch (IOException e) {
                 e.printStackTrace();
-            }
+            }*/
 
             // You can customize the marker image using images bundled with
             // your app, or dynamically generated bitmaps. 

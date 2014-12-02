@@ -1,8 +1,7 @@
-package org.mobop.flatseeker.model.web;
+package org.mobop.flatseeker.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import org.mobop.flatseeker.model.Flat;
-import org.mobop.flatseeker.model.SearchParams;
 
 public class HomeGateFinder extends FlatFinder {
 
@@ -10,6 +9,6 @@ public class HomeGateFinder extends FlatFinder {
     public Collection<Flat> Find(SearchParams params) {
 
 
-        return null;
+        return new ArrayList<Flat>();
     }
 }

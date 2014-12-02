@@ -1,6 +1,6 @@
-package org.mobop.flatseeker.model.web;
+package org.mobop.flatseeker.model;
 
-import java.util.Collection;
+import java.util.*;
 import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.SearchParams;
 

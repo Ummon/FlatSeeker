@@ -2,22 +2,21 @@ package org.mobop.flatseeker.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import org.mobop.flatseeker.model.web.FlatFinder;
-import org.mobop.flatseeker.model.web.HomeGateFinder;
 
 public class Model {
-    Search actualSearch;
     ArrayList<Search> searches;
-    FlatFinder finder = new HomeGateFinder();
+    FlatFinder finder;
 
-    public Model(){
+    public Model(FlatFinder finder) {
         this.searches = new ArrayList<Search>();
+        this.finder = finder;
     }
-    
+
     public Collection<Search> getSearches() {
         return this.searches;
     }
 
+    // Take time.
     public Search newSearch(SearchParams params) {
         Search s = new Search(this, params);
         this.searches.add(s);
@@ -30,16 +29,6 @@ public class Model {
 
     public void clearBlacklistedFlatsList() {
 
-    }
-
-    //becarefull if try to add a search which isn't in the list searches
-    public void setActualSearch(Search actualSearch){
-//        if(searches.contains(searches) || actualSearch == null)
-            this.actualSearch = actualSearch;
-    }
-    
-    public Search getActualSearch(){
-        return actualSearch;
     }
 
     protected void removeSearch(Search search) {

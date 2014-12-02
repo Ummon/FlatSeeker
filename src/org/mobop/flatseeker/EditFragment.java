@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
-import org.mobop.flatseeker.model.PriceRange;
+import org.mobop.flatseeker.model.Range;
 import org.mobop.flatseeker.model.SearchParams;
 
 public class EditFragment extends Fragment{
@@ -49,10 +49,16 @@ public class EditFragment extends Fragment{
                 model.newSearch(new SearchParams(
                         cityTbx.getText().toString(),
                         Integer.valueOf(rangeTbx.getText().toString()),
-                        new PriceRange( Integer.valueOf(startRangeTbx.getText().toString()), 
+                        new Range<Integer>(
+                                Integer.valueOf(startRangeTbx.getText().toString()),
                                 Integer.valueOf(endRangeTbx.getText().toString())),
-                        Integer.valueOf(roomTbx.getText().toString()),
-                        Integer.valueOf(sizeTbx.getText().toString())));
+                        new Range<Double>(
+                                Double.valueOf(roomTbx.getText().toString()),
+                                Double.MAX_VALUE), // TODO.
+                        new Range<Integer>(
+                                Integer.valueOf(sizeTbx.getText().toString()),
+                                Integer.MAX_VALUE) // TODO.
+                        ));
                 Toast.makeText(getActivity(),"tchin tchin", Toast.LENGTH_LONG).show();
             }
         });

@@ -35,12 +35,13 @@ public class Search {
         return params.clone();
     }
 
+    // Take time.
     public void setParams(SearchParams params) {
         if (params == null || params == this.params)
             return;
 
         this.params = params;
-        this.Update();
+        this.update();
     }
 
     public Collection<Flat> getResult() {
@@ -55,7 +56,7 @@ public class Search {
      * Update synchronously the result. May take a little time.
      * Automatically called for new search and when updating params with 'setParams(..)'.
      */
-    public void Update() {
+    public void update() {
 
     }
 }

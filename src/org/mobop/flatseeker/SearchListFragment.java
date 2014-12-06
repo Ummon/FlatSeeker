@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Search;
@@ -28,8 +29,8 @@ public class SearchListFragment extends Fragment {
         if(searchExpandable==null){return;}
         
         //TODO then adapt it to the map view
-        createData();
-        searchExpandable.notifyDataSetChanged();
+//        createData();
+//        searchExpandable.notifyDataSetChanged();
         super.onResume();
 
 //        Toast.makeText(getActivity(), "rolala", Toast.LENGTH_LONG).show();
@@ -39,7 +40,7 @@ public class SearchListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list_layout, null);
-        createData();
+//        createData();
         ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.listView);
         searchExpandable = new SearchExpandableListAdapter(this,groups,model);
         elv.setAdapter(searchExpandable);
@@ -50,14 +51,17 @@ public class SearchListFragment extends Fragment {
         groups.clear();
         
 //        Group group = new Group("Neuchâtel");
+//        groups =
         Collection<Search> searches = model.getSearches();
-        /*for (Search element : searches) {
-            element.children.clear();//TODO should remove
-            for (int i = 0; i < 5; i++) {
-                element.children.add("Sub Item" + i);
-            }
-            groups.append(groups.size(), element);
-        }*/
+//        if(searches==null)
+//            Toast.makeText(getActivity(), "search null", Toast.LENGTH_LONG).show();
+//        for (Search element : searches) {
+//            element.children.clear();//TODO should remove
+//            for (int i = 0; i < 5; i++) {
+//                element.children.add("Sub Item" + i);
+//            }
+//            groups.append(groups.size(), element);
+//        }
 //        groups.append(groups.size(), new Group("proute"));
     }
 }

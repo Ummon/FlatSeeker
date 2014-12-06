@@ -12,6 +12,7 @@ import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Search;
 
@@ -50,7 +51,8 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String children = (String) getChild(groupPosition, childPosition);
+        Flat flat = (Flat) getChild(groupPosition, childPosition);
+        final String children = "asd";//flat.getNote();
         TextView text;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_flat, null);

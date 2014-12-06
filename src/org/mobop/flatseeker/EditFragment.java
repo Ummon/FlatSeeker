@@ -21,11 +21,13 @@ public class EditFragment extends Fragment{
     Button save;
     EditText cityTbx;
     EditText rangeTbx;
-    EditText startRangeTbx;
-    EditText endRangeTbx;
-    EditText roomTbx;
-    EditText sizeTbx;
-    
+    EditText priceStartTbx;
+    EditText priceEndTbx;
+    EditText roomStartTbx;
+    EditText roomEndTbx;
+    EditText sizeStartTbx;
+    EditText sizeEndTbx;
+
     public EditFragment(Model model){
         this.model = model;
     }
@@ -36,34 +38,34 @@ public class EditFragment extends Fragment{
         
         cityTbx = (EditText)v.findViewById(R.id.editCityInput);
         rangeTbx = (EditText)v.findViewById(R.id.editRangeInput);
-        startRangeTbx = (EditText)v.findViewById(R.id.editPriceStartInput);
-        endRangeTbx = (EditText)v.findViewById(R.id.editPriceEndInput);
-        roomTbx = (EditText)v.findViewById(R.id.editRoomInput);
-        sizeTbx = (EditText)v.findViewById(R.id.editFlatSizeInput);
+        priceStartTbx = (EditText)v.findViewById(R.id.editPriceStartInput);
+        priceEndTbx = (EditText)v.findViewById(R.id.editPriceEndInput);
+        roomStartTbx = (EditText)v.findViewById(R.id.editRoomStartInput);
+        roomEndTbx = (EditText)v.findViewById(R.id.editRoomEndInput);
+        sizeStartTbx = (EditText)v.findViewById(R.id.editSizeStartInput);
+        sizeEndTbx = (EditText)v.findViewById(R.id.editSizeEndInput);
 
         save = (Button) v.findViewById(R.id.editSaveButton);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // save the new search in the global model
-                model.newSearch(new SearchParams(
-                        cityTbx.getText().toString(),
-                        Integer.valueOf(rangeTbx.getText().toString()),
-                        new Range<Integer>(
-                                Integer.valueOf(startRangeTbx.getText().toString()),
-                                Integer.valueOf(endRangeTbx.getText().toString())),
-                        new Range<Double>(
-                                Double.valueOf(roomTbx.getText().toString()),
-                                Double.MAX_VALUE), // TODO.
-                        new Range<Integer>(
-                                Integer.valueOf(sizeTbx.getText().toString()),
-                                Integer.MAX_VALUE) // TODO.
-                        ));
-                Toast.makeText(getActivity(),"tchin tchin", Toast.LENGTH_LONG).show();
+            model.newSearch(new SearchParams(
+                cityTbx.getText().toString(),
+                Integer.valueOf(rangeTbx.getText().toString()),
+                new Range<Integer>(
+                    Integer.valueOf(priceStartTbx.getText().toString()),
+                    Integer.valueOf(priceEndTbx.getText().toString())),
+                new Range<Double>(
+                    Double.valueOf(roomStartTbx.getText().toString()),
+                    Double.valueOf(roomEndTbx.getText().toString())),
+                new Range<Integer>(
+                    Integer.valueOf(sizeStartTbx.getText().toString()),
+                    Integer.valueOf(sizeEndTbx.getText().toString()))
+                ));
             }
         });
 
-       
         return v;
     }
 }

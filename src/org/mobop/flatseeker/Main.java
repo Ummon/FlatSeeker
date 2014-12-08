@@ -4,11 +4,13 @@ import android.app.ActionBar;
 import android.app.ActionBar.Tab;
 import android.app.ActionBar.TabListener;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import static org.mobop.flatseeker.R.menu.main;
 
@@ -81,5 +83,9 @@ public class Main extends FragmentActivity implements TabListener {
 
     @Override
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        fpAdapter.onActivityResult(requestCode,resultCode,data);
     }
 }

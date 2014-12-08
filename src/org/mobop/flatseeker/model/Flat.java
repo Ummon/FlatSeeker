@@ -71,6 +71,7 @@ public class Flat implements Parcelable {
         dest.writeString(street);
         dest.writeInt(number);
         dest.writeInt(floor);
+        dest.writeString(note);
     }
 
     private Flat (Parcel in) {
@@ -83,6 +84,7 @@ public class Flat implements Parcelable {
         street = in.readString();
         number = in.readInt();
         floor = in.readInt();
+        note = in.readString();
     }
 
     public static final Parcelable.Creator<Flat> CREATOR
@@ -95,4 +97,24 @@ public class Flat implements Parcelable {
             return new Flat[size];
         }
     };
+
+
+    public boolean equalsWithoutNote(Object aThat) {
+        if (this == aThat) return true;
+        if (!(aThat instanceof Flat)) return false;
+
+        Flat that = (Flat)aThat;
+        return
+            ( this.numberOfRooms == that.numberOfRooms ) &&
+                ( this.size == that.size ) &&
+                ( this.price == that.price ) &&
+                ( this.additionalExpenses == that.additionalExpenses ) &&
+                ( this.freeFrom.equals(that.freeFrom) ) &&
+                ( this.number == that.number ) &&
+                ( this.floor == that.floor ) &&
+                ( this.city.equals(that.city) ) &&
+                ( this.street.equals(that.street) )
+            ;
+    }
+
 }

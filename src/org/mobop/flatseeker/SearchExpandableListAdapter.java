@@ -2,6 +2,7 @@ package org.mobop.flatseeker;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
@@ -23,20 +25,22 @@ import org.mobop.flatseeker.model.Search;
  */
 public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
-    public final static String EXTRA_MESSAGE = "org.mobop.flatseeker.MESSAGE";
     public final static int TAG_NOTE = 1;
-    private final SparseArray<Search> groups;
+
+    final SparseArray<Search> groups;
     public LayoutInflater inflater;
     public Activity activity;
-    private static int searchSelected = -1;
-    private ExpandableListView mExpandableList;
-    private Model model;
+    ExpandableListView mExpandableList;
+
+    Model model;
+    ActualSearch actualSearch;
     
-    public SearchExpandableListAdapter(Fragment act, SparseArray<Search> groups, Model model) {
+    public SearchExpandableListAdapter(Fragment act, SparseArray<Search> groups, Model model, ActualSearch actualSearch) {
         activity = act.getActivity();
         this.groups = groups;
         inflater = activity.getLayoutInflater();
         this.model = model;
+        this.actualSearch = actualSearch;
     }
 
     @Override
@@ -60,21 +64,19 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         TextView streetTbx = (TextView) convertView.findViewById(R.id.search_row);
         streetTbx.setText(flat.street);
         TextView priceTbx = (TextView) convertView.findViewById(R.id.searchFlatPrice);
-        priceTbx.setText(flat.street);
+        priceTbx.setText(String.valueOf(flat.price));
         TextView roomTbx = (TextView) convertView.findViewById(R.id.searchFlatRoom);
-        roomTbx.setText(flat.street);
+        roomTbx.setText(String.valueOf(flat.numberOfRooms));
         TextView sizeRoom = (TextView) convertView.findViewById(R.id.searchFlatSize);
-        sizeRoom.setText(flat.street);
+        sizeRoom.setText(String.valueOf(flat.size));
 
         //start note activity
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(activity, NoteActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, flat);
-                activity.startActivityForResult(intent,TAG_NOTE);
-//                Toast.makeText(activity, children,
-//                        Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(activity, NoteActivity.class);
+            intent.putExtra(NoteActivity.NOTE_FLAT, flat);
+            activity.startActivityForResult(intent,TAG_NOTE);
             }
         });
         return convertView;
@@ -99,23 +101,19 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     public void onGroupCollapsed(int groupPosition) {
         super.onGroupCollapsed(groupPosition);
         
-        if(groupPosition==searchSelected) {
-            searchSelected = -1;
-            // TODO
-            //model.setActualSearch(null);
+        if(groupPosition==actualSearch.get()) {
+            actualSearch.set(-1);
         }
     }
 
     @Override
     public void onGroupExpanded(int groupPosition) {
         super.onGroupExpanded(groupPosition);
-        
-        if (searchSelected != -1) {
-            mExpandableList.collapseGroup(searchSelected);
+
+        if (actualSearch.get() != -1) {
+            mExpandableList.collapseGroup(actualSearch.get());
         }
-        // TODO.
-        // model.setActualSearch(groups.get(groupPosition));
-        searchSelected=groupPosition;
+        actualSearch.set(groupPosition);
     }
 
     @Override

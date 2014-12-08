@@ -1,5 +1,6 @@
 package org.mobop.flatseeker;
 
+import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,25 +11,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.mobop.flatseeker.model.Model;
+import org.mobop.flatseeker.model.Search;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 public class MapFragment extends Fragment {
 
-    Model model;
-    Integer actualSeach;
+    static Model model;
+    static ActualSearch actualSeach;
 
     GoogleMap map;
     SupportMapFragment mSupportMapFragment;
-    
-    public MapFragment(Model model, Integer actualSearch){
+
+
+    // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
+    public void initMapFragment(Model model, ActualSearch actualSearch){
         this.model = model;
         this.actualSeach = actualSearch;
     }
@@ -36,8 +42,6 @@ public class MapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-//        Toast.makeText(getActivity(), String.valueOf(SearchExpandableListAdapter.getSearchSelected()),Toast.LENGTH_SHORT).show();
-        
         if(mSupportMapFragment==null) {
             mSupportMapFragment = new SupportMapFragment() {
                 @Override
@@ -67,22 +71,21 @@ public class MapFragment extends Fragment {
     
     public void refreshPosition(){
 
-        /*if(model.getActualSearch()!=null)*/ {
+        if(actualSeach.get()!=-1) {
 
-//            Toast.makeText(getActivity().getApplicationContext(), "froute", Toast.LENGTH_SHORT).show();
-            
-//            Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
+            Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
+            List<Search> l = new ArrayList<Search>(model.getSearches());
 
             // TODO
-            /*try {
-                List<Address> address = geoCoder.getFromLocationName(model.getActualSearch().getParams().city, 10);
+            try {
+                List<Address> address = geoCoder.getFromLocationName(l.get(actualSeach.get()).getParams().city, 10);
                 double latitude = address.get(0).getLatitude();
                 double longitude = address.get(0).getLongitude();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
                         new LatLng(latitude, longitude), 16));
             } catch (IOException e) {
                 e.printStackTrace();
-            }*/
+            }
 
             // You can customize the marker image using images bundled with
             // your app, or dynamically generated bitmaps. 

@@ -3,6 +3,7 @@ package org.mobop.flatseeker;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,8 @@ import java.util.List;
 
 public class EditFragment extends Fragment{
 
-    Model model;
-    Integer actualSearch;
+    static Model model;
+    static ActualSearch actualSearch;
     
     Button save;
     EditText cityTbx;
@@ -32,8 +33,10 @@ public class EditFragment extends Fragment{
     EditText roomEndTbx;
     EditText sizeStartTbx;
     EditText sizeEndTbx;
+    ViewPager viewPager;
 
-    public EditFragment(Model model,Integer actualSearch){
+    // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
+    public void initEditFragment(Model model,ActualSearch actualSearch){
         this.model = model;
         this.actualSearch = actualSearch;
     }
@@ -41,6 +44,8 @@ public class EditFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.edit_layout, container, false);
+
+        viewPager = (ViewPager) getActivity().findViewById(R.id.pager);
         
         cityTbx = (EditText)v.findViewById(R.id.editCityInput);
         radiusTbx = (EditText)v.findViewById(R.id.editRangeInput);
@@ -71,6 +76,8 @@ public class EditFragment extends Fragment{
                     Integer.valueOf(sizeStartTbx.getText().toString()),
                     Integer.valueOf(sizeEndTbx.getText().toString()))
                 ));
+
+            viewPager.setCurrentItem(FragmentPageAdapter.SEARCH_ID);
             }
         });
 
@@ -79,31 +86,31 @@ public class EditFragment extends Fragment{
 
     public void onResume(){
         super.onResume();
-        Toast.makeText(getActivity(),String.valueOf(actualSearch),Toast.LENGTH_SHORT).show();
+        fill();
     }
 
     private void fill(){
-        if(actualSearch>-1){
+        if(actualSearch.get()>-1){
             List<Search> l = new ArrayList<Search>(model.getSearches());
-            SearchParams s = l.get(actualSearch).getParams();
+            SearchParams s = l.get(actualSearch.get()).getParams();
 
             cityTbx.setText(s.city);
-            radiusTbx.setText(s.radius);
-            priceStartTbx.setText(s.price.from);
-            priceEndTbx.setText(s.price.to);
+            radiusTbx.setText(String.valueOf(s.radius));
+            priceStartTbx.setText(String.valueOf(s.price.from));
+            priceEndTbx.setText(String.valueOf(s.price.to));
             roomStartTbx.setText(String.valueOf(s.numberOfRooms.from));
             roomEndTbx.setText(String.valueOf(s.numberOfRooms.to));
-            sizeStartTbx.setText(s.size.from);
-            sizeEndTbx.setText(s.size.to);
+            sizeStartTbx.setText(String.valueOf(s.size.from));
+            sizeEndTbx.setText(String.valueOf(s.size.to));
         }else{
-            cityTbx.setText("");
-            radiusTbx.setText("");
-            priceStartTbx.setText("");
-            priceEndTbx.setText("");
-            roomStartTbx.setText("");
-            roomEndTbx.setText("");
-            sizeStartTbx.setText("");
-            sizeEndTbx.setText("");
+//            cityTbx.setText("");
+//            radiusTbx.setText("");
+//            priceStartTbx.setText("");
+//            priceEndTbx.setText("");
+//            roomStartTbx.setText("");
+//            roomEndTbx.setText("");
+//            sizeStartTbx.setText("");
+//            sizeEndTbx.setText("");
         }
     }
 

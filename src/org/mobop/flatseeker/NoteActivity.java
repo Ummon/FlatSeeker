@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Flat;
@@ -16,13 +15,16 @@ import org.mobop.flatseeker.model.Flat;
 
 public class NoteActivity extends Activity {
 
+    public static final String NOTE_MESSAGE = "NOTE_MESSAGE";
+    public static final String NOTE_FLAT = "NOTE_FLAT";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
         final Intent intent = getIntent();
-        final Flat flat = intent.getParcelableExtra(SearchExpandableListAdapter.EXTRA_MESSAGE);
+        final Flat flat = intent.getParcelableExtra(NOTE_FLAT);
 
         final EditText editText = (EditText)findViewById(R.id.noteNoteTbx);
         editText.setText(flat.getNote());
@@ -31,10 +33,10 @@ public class NoteActivity extends Activity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flat.setNote(editText.getText().toString());
                 Intent intent = new Intent();
-                intent.putExtra("flat",flat);
-                setResult(SearchExpandableListAdapter.TAG_NOTE,intent);
+                flat.setNote(String.valueOf(editText.getText()));
+                intent.putExtra(NOTE_MESSAGE, flat);
+                setResult(SearchExpandableListAdapter.TAG_NOTE, intent);
                 finish();
             }
         });

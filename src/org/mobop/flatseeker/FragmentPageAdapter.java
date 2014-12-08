@@ -1,9 +1,11 @@
 package org.mobop.flatseeker;
 
 import android.app.ActionBar;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.*;
 
@@ -13,7 +15,7 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     SearchListFragment searchListFragment;
     MapFragment mapFragment;
     Model model;
-    Integer actualSearch = -1;
+    ActualSearch actualSearch = new ActualSearch();
 
     public static final int EDIT_ID = 0;
     public static final int SEARCH_ID = 1;
@@ -33,16 +35,19 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
         switch (arg0) {
         case EDIT_ID:
             if(editFragment==null)
-                editFragment = new EditFragment(model, actualSearch);
+                editFragment = new EditFragment();
+                editFragment.initEditFragment(model, actualSearch);
             return editFragment;
         case SEARCH_ID:
             if(searchListFragment==null)
-                searchListFragment = new SearchListFragment(model, actualSearch);
+                searchListFragment = new SearchListFragment();
+                searchListFragment.initSearchListFragment(model, actualSearch);
             return searchListFragment;
         case MAP_ID:
     //	    return SupportMapFragment.newInstance();
             if(mapFragment==null)
-                mapFragment = new MapFragment(model, actualSearch);
+                mapFragment = new MapFragment();
+                mapFragment.initMapFragment(model, actualSearch);
             return mapFragment;
         default:
             break;
@@ -74,5 +79,9 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
                 editFragment.onResume();
             }
         }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            searchListFragment.onActivityResult(requestCode,resultCode,data);
     }
 }

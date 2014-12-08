@@ -5,7 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.mobop.flatseeker.model.Flat;
 
 
 public class NoteActivity extends Activity {
@@ -15,11 +21,23 @@ public class NoteActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
 
-        Intent intent = getIntent();
-        String message = intent.getStringExtra(SearchExpandableListAdapter.EXTRA_MESSAGE);
+        final Intent intent = getIntent();
+        final Flat flat = intent.getParcelableExtra(SearchExpandableListAdapter.EXTRA_MESSAGE);
 
-        TextView textView = (TextView)findViewById(R.id.note_city_name);
-        textView.setText(message);
+        final EditText editText = (EditText)findViewById(R.id.noteNoteTbx);
+        editText.setText(flat.getNote());
+
+        Button saveBtn = (Button)findViewById(R.id.noteSaveBtn);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                flat.setNote(editText.getText().toString());
+                Intent intent = new Intent();
+                intent.putExtra("flat",flat);
+                setResult(SearchExpandableListAdapter.TAG_NOTE,intent);
+                finish();
+            }
+        });
     }
 
 

@@ -71,7 +71,7 @@ public class Main extends FragmentActivity implements TabListener {
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
-        fpAdapter.refresh();
+        fpAdapter.refresh(tab);
 	    viewPager.setCurrentItem(tab.getPosition());
     }
 

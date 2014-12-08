@@ -24,6 +24,7 @@ import org.mobop.flatseeker.model.Search;
 public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
     public final static String EXTRA_MESSAGE = "org.mobop.flatseeker.MESSAGE";
+    public final static int TAG_NOTE = 1;
     private final SparseArray<Search> groups;
     public LayoutInflater inflater;
     public Activity activity;
@@ -51,21 +52,27 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        Flat flat = (Flat) getChild(groupPosition, childPosition);
-        final String children = "asd";//flat.getNote();
-        TextView text;
+        final Flat flat = (Flat) getChild(groupPosition, childPosition);
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.listrow_flat, null);
         }
-        text = (TextView) convertView.findViewById(R.id.search_row);
-        text.setText(children);
 
+        TextView streetTbx = (TextView) convertView.findViewById(R.id.search_row);
+        streetTbx.setText(flat.street);
+        TextView priceTbx = (TextView) convertView.findViewById(R.id.searchFlatPrice);
+        priceTbx.setText(flat.street);
+        TextView roomTbx = (TextView) convertView.findViewById(R.id.searchFlatRoom);
+        roomTbx.setText(flat.street);
+        TextView sizeRoom = (TextView) convertView.findViewById(R.id.searchFlatSize);
+        sizeRoom.setText(flat.street);
+
+        //start note activity
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, NoteActivity.class);
-                intent.putExtra(EXTRA_MESSAGE, children);
-                activity.startActivity(intent);
+                intent.putExtra(EXTRA_MESSAGE, flat);
+                activity.startActivityForResult(intent,TAG_NOTE);
 //                Toast.makeText(activity, children,
 //                        Toast.LENGTH_SHORT).show();
             }

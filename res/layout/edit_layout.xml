@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/editCityInput"
             android:layout_weight="100"
-            android:text="bitch"
+            android:text="neuchatel"
             android:hint="@string/city" />
 
         <EditText

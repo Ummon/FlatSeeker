@@ -41,6 +41,7 @@ public class Search {
             return;
 
         this.params = params;
+        result = new ArrayList<Flat>(model.finder.Find(params)); // a supp avant de commit
         this.update();
     }
 

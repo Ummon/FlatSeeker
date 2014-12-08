@@ -12,15 +12,20 @@ import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Range;
+import org.mobop.flatseeker.model.Search;
 import org.mobop.flatseeker.model.SearchParams;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditFragment extends Fragment{
 
     Model model;
+    Integer actualSearch;
     
     Button save;
     EditText cityTbx;
-    EditText rangeTbx;
+    EditText radiusTbx;
     EditText priceStartTbx;
     EditText priceEndTbx;
     EditText roomStartTbx;
@@ -28,8 +33,9 @@ public class EditFragment extends Fragment{
     EditText sizeStartTbx;
     EditText sizeEndTbx;
 
-    public EditFragment(Model model){
+    public EditFragment(Model model,Integer actualSearch){
         this.model = model;
+        this.actualSearch = actualSearch;
     }
 
     @Override
@@ -37,13 +43,15 @@ public class EditFragment extends Fragment{
         View v = inflater.inflate(R.layout.edit_layout, container, false);
         
         cityTbx = (EditText)v.findViewById(R.id.editCityInput);
-        rangeTbx = (EditText)v.findViewById(R.id.editRangeInput);
+        radiusTbx = (EditText)v.findViewById(R.id.editRangeInput);
         priceStartTbx = (EditText)v.findViewById(R.id.editPriceStartInput);
         priceEndTbx = (EditText)v.findViewById(R.id.editPriceEndInput);
         roomStartTbx = (EditText)v.findViewById(R.id.editRoomStartInput);
         roomEndTbx = (EditText)v.findViewById(R.id.editRoomEndInput);
         sizeStartTbx = (EditText)v.findViewById(R.id.editSizeStartInput);
         sizeEndTbx = (EditText)v.findViewById(R.id.editSizeEndInput);
+
+        fill();
 
         save = (Button) v.findViewById(R.id.editSaveButton);
         save.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +60,7 @@ public class EditFragment extends Fragment{
                 // save the new search in the global model
             model.newSearch(new SearchParams(
                 cityTbx.getText().toString(),
-                Integer.valueOf(rangeTbx.getText().toString()),
+                Integer.valueOf(radiusTbx.getText().toString()),
                 new Range<Integer>(
                     Integer.valueOf(priceStartTbx.getText().toString()),
                     Integer.valueOf(priceEndTbx.getText().toString())),
@@ -68,6 +76,37 @@ public class EditFragment extends Fragment{
 
         return v;
     }
+
+    public void onResume(){
+        super.onResume();
+        Toast.makeText(getActivity(),String.valueOf(actualSearch),Toast.LENGTH_SHORT).show();
+    }
+
+    private void fill(){
+        if(actualSearch>-1){
+            List<Search> l = new ArrayList<Search>(model.getSearches());
+            SearchParams s = l.get(actualSearch).getParams();
+
+            cityTbx.setText(s.city);
+            radiusTbx.setText(s.radius);
+            priceStartTbx.setText(s.price.from);
+            priceEndTbx.setText(s.price.to);
+            roomStartTbx.setText(String.valueOf(s.numberOfRooms.from));
+            roomEndTbx.setText(String.valueOf(s.numberOfRooms.to));
+            sizeStartTbx.setText(s.size.from);
+            sizeEndTbx.setText(s.size.to);
+        }else{
+            cityTbx.setText("");
+            radiusTbx.setText("");
+            priceStartTbx.setText("");
+            priceEndTbx.setText("");
+            roomStartTbx.setText("");
+            roomEndTbx.setText("");
+            sizeStartTbx.setText("");
+            sizeEndTbx.setText("");
+        }
+    }
+
 }
 
 

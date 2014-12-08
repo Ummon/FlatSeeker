@@ -1,20 +1,23 @@
 package org.mobop.flatseeker.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.*;
 
-public class Flat {
-    double numberOfRooms;
-    int size; // [m²].
+public class Flat implements Parcelable {
+    public final double numberOfRooms;
+    public final int size; // [m²].
 
-    int price;
-    int additionalExpenses;
+    public final int price;
+    public final int additionalExpenses;
 
-    Date freeFrom;
+    public final Date freeFrom;
 
-    String city;
-    String street;
-    int number;
-    int floor; // 0 is the first floor.
+    public final String city;
+    public final String street;
+    public final int number;
+    public final int floor; // 0 is the first floor.
 
     String note;
 
@@ -51,4 +54,45 @@ public class Flat {
     public void blacklist() {
 
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeDouble(numberOfRooms);
+        dest.writeInt(size);
+        dest.writeInt(price);
+        dest.writeInt(additionalExpenses);
+        dest.writeSerializable(freeFrom);
+        dest.writeString(city);
+        dest.writeString(street);
+        dest.writeInt(number);
+        dest.writeInt(floor);
+    }
+
+    private Flat (Parcel in) {
+        numberOfRooms = in.readDouble();
+        size = in.readInt();
+        price = in.readInt();
+        additionalExpenses = in.readInt();
+        freeFrom = (Date)in.readSerializable();
+        city = in.readString();
+        street = in.readString();
+        number = in.readInt();
+        floor = in.readInt();
+    }
+
+    public static final Parcelable.Creator<Flat> CREATOR
+            = new Parcelable.Creator<Flat>() {
+        public Flat createFromParcel(Parcel in) {
+            return new Flat(in);
+        }
+
+        public Flat[] newArray(int size) {
+            return new Flat[size];
+        }
+    };
 }

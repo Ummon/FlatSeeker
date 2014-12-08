@@ -23,11 +23,14 @@ import java.util.Locale;
 public class MapFragment extends Fragment {
 
     Model model;
+    Integer actualSeach;
+
     GoogleMap map;
     SupportMapFragment mSupportMapFragment;
     
-    public MapFragment(Model model){
+    public MapFragment(Model model, Integer actualSearch){
         this.model = model;
+        this.actualSeach = actualSearch;
     }
     
     @Override

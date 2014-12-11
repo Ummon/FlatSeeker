@@ -1,5 +1,6 @@
 package org.mobop.flatseeker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -63,19 +64,22 @@ public class EditFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 // save the new search in the global model
-            model.newSearch(new SearchParams(
-                cityTbx.getText().toString(),
-                Integer.valueOf(radiusTbx.getText().toString()),
-                new Range<Integer>(
-                    Integer.valueOf(priceStartTbx.getText().toString()),
-                    Integer.valueOf(priceEndTbx.getText().toString())),
-                new Range<Double>(
-                    Double.valueOf(roomStartTbx.getText().toString()),
-                    Double.valueOf(roomEndTbx.getText().toString())),
-                new Range<Integer>(
-                    Integer.valueOf(sizeStartTbx.getText().toString()),
-                    Integer.valueOf(sizeEndTbx.getText().toString()))
-                ));
+                SearchParams test = new SearchParams(
+                        cityTbx.getText().toString(),
+                        Integer.valueOf(radiusTbx.getText().toString()),
+                        new Range<Integer>(
+                                Integer.valueOf(priceStartTbx.getText().toString()),
+                                Integer.valueOf(priceEndTbx.getText().toString())),
+                        new Range<Double>(
+                                Double.valueOf(roomStartTbx.getText().toString()),
+                                Double.valueOf(roomEndTbx.getText().toString())),
+                        new Range<Integer>(
+                                Integer.valueOf(sizeStartTbx.getText().toString()),
+                                Integer.valueOf(sizeEndTbx.getText().toString()))
+                );
+
+                model.newSearch(test);
+
 
             viewPager.setCurrentItem(FragmentPageAdapter.SEARCH_ID);
             }

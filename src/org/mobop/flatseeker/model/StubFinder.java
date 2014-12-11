@@ -1,10 +1,17 @@
 package org.mobop.flatseeker.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StubFinder extends FlatFinder {
+
+    public StubFinder() {
+    }
+
     public Collection<Flat> Find(SearchParams params) {
         ArrayList<Flat> flats = new ArrayList<Flat>();
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -28,4 +35,27 @@ public class StubFinder extends FlatFinder {
 
         return flats;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+    }
+
+    private StubFinder(Parcel in) {
+    }
+
+    public static final Parcelable.Creator<StubFinder> CREATOR
+            = new Parcelable.Creator<StubFinder>() {
+        public StubFinder createFromParcel(Parcel in) {
+            return new StubFinder(in);
+        }
+
+        public StubFinder[] newArray(int size) {
+            return new StubFinder[size];
+        }
+    };
 }

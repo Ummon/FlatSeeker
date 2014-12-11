@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Search;
+import org.mobop.flatseeker.model.SearchParams;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -59,18 +60,10 @@ public class SearchListFragment extends Fragment {
     public void createData() {
         groups.clear();
         
-//        Group group = new Group("Neuchâtel");
-//        groups =
         Collection<Search> searches = model.getSearches();
         for (Search element : searches) {
-//            element.children.clear();//TODO should remove
-//            for (int i = 0; i < 5; i++) {
-//                element.children.add("Sub Item" + i);
-//            }
-
             groups.append(groups.size(), element);
         }
-//        groups.append(groups.size(), new Group("proute"));
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

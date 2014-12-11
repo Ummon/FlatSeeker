@@ -1,13 +1,18 @@
 package org.mobop.flatseeker.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.ParcelableSpan;
+
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 /**
  * To create a new search use 'Model.newSearch(..)'.
  */
-public class Search {
+public class Search implements Parcelable {
     Model model;
     SearchParams params;
     ArrayList<Flat> result = new ArrayList<Flat>();
@@ -59,5 +64,47 @@ public class Search {
      */
     public void update() {
 
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(params,flags);
+//        dest.writeParcelable(model,flags);
+        dest.writeInt(result.size());
+        for(Flat f : result){
+            dest.writeParcelable(f,flags);
+        }
+    }
+
+    private Search (Parcel in) {
+        params = in.readParcelable(SearchParams.class.getClassLoader());
+//        model = in.readParcelable(Model.class.getClassLoader());
+        int size = in.readInt();
+        for(int i=0;i<size;i++){
+            result.add(in.<Flat>readParcelable(Flat.class.getClassLoader()));
+        }
+    }
+
+    public static final Parcelable.Creator<Search> CREATOR
+            = new Parcelable.Creator<Search>() {
+        public Search createFromParcel(Parcel in) {
+            return new Search(in);
+        }
+
+        public Search[] newArray(int size) {
+            return new Search[size];
+        }
+    };
+
+    // set only use when we parcelable. Model have Search -> Search have model -> infity
+    public void setModel(Model model){
+        if(this.model==null){
+            this.model = model;
+        }
     }
 }

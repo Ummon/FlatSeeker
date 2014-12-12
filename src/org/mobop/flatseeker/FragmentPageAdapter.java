@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.Toast;
 
 import org.mobop.flatseeker.model.*;
@@ -37,19 +39,19 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
         switch (arg0) {
         case EDIT_ID:
             if(editFragment==null)
-                editFragment = new EditFragment();
-                editFragment.initEditFragment(model, actualSearch);
+                editFragment = EditFragment.newInstance(model,actualSearch);
+//                editFragment.initEditFragment(model, actualSearch);
             return editFragment;
         case SEARCH_ID:
             if(searchListFragment==null)
-                searchListFragment = new SearchListFragment();
-                searchListFragment.initSearchListFragment(model, actualSearch);
+                searchListFragment = SearchListFragment.newInstance(model,actualSearch);
+//                searchListFragment.initSearchListFragment(model, actualSearch);
             return searchListFragment;
         case MAP_ID:
     //	    return SupportMapFragment.newInstance();
             if(mapFragment==null)
-                mapFragment = new MapFragment();
-                mapFragment.initMapFragment(model, actualSearch);
+                mapFragment = MapFragment.newInstance(model,actualSearch);
+//                mapFragment.initMapFragment(model, actualSearch);
             return mapFragment;
         default:
             break;

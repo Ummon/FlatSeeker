@@ -80,6 +80,7 @@ public class Main extends FragmentActivity implements TabListener {
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
+//        ft.replace(R.id.pager,fpAdapter.getItem(tab.getPosition()));
         fpAdapter.refresh(tab);
 	    viewPager.setCurrentItem(tab.getPosition());
     }
@@ -102,9 +103,6 @@ public class Main extends FragmentActivity implements TabListener {
         model = StorageManager.loadModel(getApplicationContext());
         actualSearch = new ActualSearch();
         fpAdapter.setModelAndActualSearch(model,actualSearch);
-        if(actualSearch==null){
-            Toast.makeText(getApplicationContext(),"actualSeach est null shiiiiit",Toast.LENGTH_SHORT).show();
-        }
     }
 
 

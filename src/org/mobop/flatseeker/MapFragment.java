@@ -38,6 +38,28 @@ public class MapFragment extends Fragment {
         this.model = model;
         this.actualSearch = actualSearch;
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+//        Toast.makeText(getActivity(),"okokokok",Toast.LENGTH_SHORT).show();
+        this.model = getArguments().getParcelable(Model.class.getName());
+        this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
+//        setRetainInstance(true);
+    }
+
+    public static final MapFragment newInstance(Model model, ActualSearch actualSearch)
+    {
+        MapFragment f = new MapFragment();
+//        f.model = model;
+//        f.actualSearch = actualSearch;
+        Bundle bdl = new Bundle(2);
+        bdl.putParcelable(Model.class.getName(), model);
+        bdl.putParcelable(ActualSearch.class.getName(), actualSearch);
+        f.setArguments(bdl);
+        return f;
+    }
     
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

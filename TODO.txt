@@ -1,1 +1,4 @@
 * Pompage/parçage de homegame.ch
+
+* Correction bug lors du changment de position
+Gérer les fonctions asynchrone pour l'UI

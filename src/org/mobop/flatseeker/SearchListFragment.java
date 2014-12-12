@@ -1,9 +1,6 @@
 package org.mobop.flatseeker;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
-import android.graphics.AvoidXfermode;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Search;
-import org.mobop.flatseeker.model.SearchParams;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -40,6 +35,7 @@ public class SearchListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
         this.model = getArguments().getParcelable(Model.class.getName());
         this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
 //        setRetainInstance(true);
@@ -64,7 +60,6 @@ public class SearchListFragment extends Fragment {
         createData();
         searchExpandable.notifyDataSetChanged();
         super.onResume();
-
     }
     
     @Override

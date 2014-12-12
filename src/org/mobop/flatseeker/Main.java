@@ -10,10 +10,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
-import org.mobop.flatseeker.model.StubFinder;
 
 import static org.mobop.flatseeker.R.menu.main;
 
@@ -31,25 +29,26 @@ public class Main extends FragmentActivity implements TabListener {
 
         model = StorageManager.loadModel(getApplicationContext());
         actualSearch = new ActualSearch();
-        fpAdapter = new FragmentPageAdapter(getSupportFragmentManager(),model,actualSearch);
+        fpAdapter = new FragmentPageAdapter(getSupportFragmentManager(), model, actualSearch);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(fpAdapter);
 
         actionBar = getActionBar();
+        assert actionBar != null;
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         actionBar.addTab(actionBar.newTab().setText("Edit").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("List").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Map").setTabListener(this));
 
-    //	GoogleMap googleMap;
-    //	googleMap = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
+        //	GoogleMap googleMap;
+        //	googleMap = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
         viewPager.requestTransparentRegion(viewPager);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
             @Override
             public void onPageSelected(int arg0) {
-            actionBar.setSelectedNavigationItem(arg0);
+                actionBar.setSelectedNavigationItem(arg0);
             }
 
             @Override
@@ -61,14 +60,14 @@ public class Main extends FragmentActivity implements TabListener {
             }
         });
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
         }
-	    return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
     // 3 buttons in the title
@@ -80,9 +79,10 @@ public class Main extends FragmentActivity implements TabListener {
 
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
+
 //        ft.replace(R.id.pager,fpAdapter.getItem(tab.getPosition()));
         fpAdapter.refresh(tab);
-	    viewPager.setCurrentItem(tab.getPosition());
+        viewPager.setCurrentItem(tab.getPosition());
     }
 
     @Override
@@ -93,20 +93,20 @@ public class Main extends FragmentActivity implements TabListener {
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
     }
 
-    public void onPause(){
+    public void onPause() {
         super.onPause();
-        StorageManager.saveModel(model,getApplicationContext());
+        StorageManager.saveModel(model, getApplicationContext());
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         model = StorageManager.loadModel(getApplicationContext());
         actualSearch = new ActualSearch();
-        fpAdapter.setModelAndActualSearch(model,actualSearch);
+        fpAdapter.setModelAndActualSearch(model, actualSearch);
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
-        fpAdapter.onActivityResult(requestCode,resultCode,data);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        fpAdapter.onActivityResult(requestCode, resultCode, data);
     }
 }

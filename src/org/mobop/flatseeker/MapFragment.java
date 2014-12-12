@@ -14,12 +14,17 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Search;
+import org.mobop.flatseeker.model.SearchParams;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -34,14 +39,13 @@ public class MapFragment extends Fragment {
 
 
     // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
-    public void initMapFragment(Model model, ActualSearch actualSearch){
+    public void initMapFragment(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Toast.makeText(getActivity(),"okokokok",Toast.LENGTH_SHORT).show();
         this.model = getArguments().getParcelable(Model.class.getName());
@@ -49,8 +53,7 @@ public class MapFragment extends Fragment {
 //        setRetainInstance(true);
     }
 
-    public static final MapFragment newInstance(Model model, ActualSearch actualSearch)
-    {
+    public static final MapFragment newInstance(Model model, ActualSearch actualSearch) {
         MapFragment f = new MapFragment();
 //        f.model = model;
 //        f.actualSearch = actualSearch;
@@ -60,25 +63,25 @@ public class MapFragment extends Fragment {
         f.setArguments(bdl);
         return f;
     }
-    
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        if(mSupportMapFragment==null) {
+    @Override
+    public View onCreateView(final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (mSupportMapFragment == null) {
             mSupportMapFragment = new SupportMapFragment() {
                 @Override
                 public void onActivityCreated(Bundle savedInstanceState) {
                     super.onActivityCreated(savedInstanceState);
                     map = mSupportMapFragment.getMap();
                     map.setMyLocationEnabled(true);
+                    map.setInfoWindowAdapter(new PopupAdapter(inflater));
                     map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
                         @Override
                         public void onMapLongClick(LatLng latLng) {
-                            Toast.makeText(getActivity().getApplicationContext(), "bitch", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(getActivity().getApplicationContext(), "bitch", Toast.LENGTH_LONG).show();
                         }
                     });
 
-                   refreshPosition();
+                    refreshPosition();
                 }
 
             };
@@ -87,29 +90,29 @@ public class MapFragment extends Fragment {
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.map, mSupportMapFragment);
         fragmentTransaction.commit();
-        
-    	return inflater.inflate(R.layout.map_layout, container, false);
+
+        return inflater.inflate(R.layout.map_layout, container, false);
     }
 
-    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+    public void setModelAndActualSearch(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
     }
-    
-    public void refreshPosition(){
 
-        if(actualSearch.get()!=-1) {
+    public void refreshPosition() {
+
+        if (actualSearch.get() != -1) {
 
             Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
             List<Search> l = new ArrayList<Search>(model.getSearches());
+            Search search = l.get(actualSearch.get());
 
             // TODO
             try {
-                List<Address> address = geoCoder.getFromLocationName(l.get(actualSearch.get()).getParams().city, 10);
-                double latitude = address.get(0).getLatitude();
-                double longitude = address.get(0).getLongitude();
+                SearchParams params = search.getParams();
+                Address address = geoCoder.getFromLocationName(params.city, params.radius).get(0);
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(latitude, longitude), 16));
+                        new LatLng(address.getLatitude(), address.getLongitude()), 16));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -126,10 +129,34 @@ public class MapFragment extends Fragment {
 //                map.setMyLocationEnabled(true);
 //                map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
 //
-//                map.addMarker(new MarkerOptions()
-//                        .title("Sydney")
-//                        .snippet("The most populous city in Australia.")
-//                        .position(sydney));
+            StringBuilder sb = new StringBuilder();
+            for (Flat flat : search.getResult()) {
+                sb.delete(0, sb.length());
+                sb.append(flat.city).append(" ".intern()).append(flat.street)
+                        .append(" ".intern()).append(flat.number);
+                Address address = null;
+                try {
+                    address = geoCoder.getFromLocationName(sb.toString(), search.getParams().radius).get(0);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                sb.delete(0,sb.length());
+                sb.append("Room : ").append(flat.numberOfRooms).append("\n");
+                sb.append("Free from : ").append(new SimpleDateFormat("dd/MMMM/yyyy").format(flat.freeFrom)).append("\n");
+                sb.append("Additional expenses : ").append(flat.additionalExpenses).append("\n");
+                sb.append("Price (CHF) : ").append(flat.price).append("\n");
+                sb.append("Floor : ").append(flat.floor).append("\n");
+                sb.append("Size(m^2) : ").append(flat.size).append("\n");
+
+                assert address != null;
+                map.addMarker(new MarkerOptions()
+                        .title(flat.street+" ".intern()+String.valueOf(flat.number))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.house))
+                        .snippet(sb.toString())
+                        .position(new LatLng(address.getLatitude(), address.getLongitude())));
+            }
         }
     }
 }

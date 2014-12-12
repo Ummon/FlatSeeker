@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.mobop.flatseeker.model.Model;
+import org.mobop.flatseeker.model.ImmoStreetFinder;
 
 import static org.mobop.flatseeker.R.menu.main;
 

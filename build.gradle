@@ -3,20 +3,37 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0-rc4'
+        classpath 'com.android.tools.build:gradle:1.0.0'
     }
 }
 
-apply plugin: 'android'
+apply plugin: 'com.android.application'
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     compile 'com.android.support:appcompat-v7:19.+'
     compile 'com.google.android.gms:play-services:6.1.+'
+
+    compile 'org.jsoup:jsoup:1.8.+'
+    compile 'com.google.code.gson:gson:2.3.1'
+
+    compile 'com.android.support:multidex:1.0.+'
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion '20.0.0'
+    buildToolsVersion '21.1.1'
+
+    defaultConfig {
+        multiDexEnabled true
+    }
+
+    dexOptions {
+        javaMaxHeapSize "6g"
+    }
 
     sourceSets {
         main {

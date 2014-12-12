@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 public class SearchParams implements Cloneable, Parcelable, Serializable {
@@ -12,6 +13,7 @@ public class SearchParams implements Cloneable, Parcelable, Serializable {
     public Range<Integer> price;
     public Range<Double> numberOfRooms;
     public Range<Integer> size;
+    public Calendar date;
 
     /**
      *
@@ -21,7 +23,7 @@ public class SearchParams implements Cloneable, Parcelable, Serializable {
      * @param numberOfRooms
      * @param size [m²]
      */
-    public SearchParams(String city, int radius, Range<Integer> price, Range<Double> numberOfRooms, Range<Integer> size) {
+    public SearchParams(String city, int radius, Range<Integer> price, Range<Double> numberOfRooms, Range<Integer> size, Calendar date) {
         this.city = city;
         this.radius = radius;
         this.price = price;
@@ -30,7 +32,7 @@ public class SearchParams implements Cloneable, Parcelable, Serializable {
     }
 
     public SearchParams clone() {
-        return new SearchParams(this.city, this.radius, this.price.clone(), this.numberOfRooms, this.size);
+        return new SearchParams(this.city, this.radius, this.price.clone(), this.numberOfRooms, this.size, this.date);
     }
 
     @Override
@@ -40,26 +42,28 @@ public class SearchParams implements Cloneable, Parcelable, Serializable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(city);
-        dest.writeInt(radius);
-        dest.writeInt(price.from);
-        dest.writeInt(price.to);
-        dest.writeDouble(numberOfRooms.from);
-        dest.writeDouble(numberOfRooms.to);
-        dest.writeInt(size.from);
-        dest.writeInt(size.to);
+        dest.writeString(this.city);
+        dest.writeInt(this.radius);
+        dest.writeInt(this.price.from);
+        dest.writeInt(this.price.to);
+        dest.writeDouble(this.numberOfRooms.from);
+        dest.writeDouble(this.numberOfRooms.to);
+        dest.writeInt(this.size.from);
+        dest.writeInt(this.size.to);
+        dest.writeLong(this.date.getTimeInMillis());
     }
 
     private SearchParams (Parcel in) {
-        city = in.readString();
-        radius = in.readInt();
-        price = new Range<Integer>(in.readInt(),in.readInt());
-        numberOfRooms = new Range<Double>(in.readDouble(),in.readDouble());
-        size = new Range<Integer>(in.readInt(),in.readInt());
+        this.city = in.readString();
+        this.radius = in.readInt();
+        this.price = new Range<Integer>(in.readInt(),in.readInt());
+        this.numberOfRooms = new Range<Double>(in.readDouble(),in.readDouble());
+        this.size = new Range<Integer>(in.readInt(),in.readInt());
+        this.date = Calendar.getInstance();
+        this.date.setTimeInMillis(in.readLong());
     }
 
-    public static final Parcelable.Creator<SearchParams> CREATOR
-            = new Parcelable.Creator<SearchParams>() {
+    public static final Parcelable.Creator<SearchParams> CREATOR = new Parcelable.Creator<SearchParams>() {
         public SearchParams createFromParcel(Parcel in) {
             return new SearchParams(in);
         }

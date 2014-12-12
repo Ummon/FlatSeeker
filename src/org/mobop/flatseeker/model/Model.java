@@ -16,6 +16,17 @@ public class Model implements Parcelable, Serializable {
         this.finder = finder;
     }
 
+    private Model(Parcel in) {
+        searches = new ArrayList<Search>();
+        int size = in.readInt();
+        for (int i = 0; i < size; i++) {
+            Search s = in.readParcelable(Search.class.getClassLoader());
+            s.setModel(this);
+            searches.add(s);
+        }
+        this.finder = new ImmoStreetFinder(); // Default finder.
+    }
+
     public Collection<Search> getSearches() {
         return this.searches;
     }
@@ -46,22 +57,9 @@ public class Model implements Parcelable, Serializable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeParcelable(finder,flags);
-        dest.writeInt(searches.size());
-        for(Search s : searches){
+        dest.writeInt(this.searches.size());
+        for (Search s : this.searches)
             dest.writeParcelable(s, flags);
-        }
-    }
-
-    private Model (Parcel in) {
-        finder = in.readParcelable(FlatFinder.class.getClassLoader());
-        searches = new ArrayList<Search>();
-        int size = in.readInt();
-        for(int i=0;i<size;i++){
-            Search s = in.readParcelable(Search.class.getClassLoader());
-            s.setModel(this);
-            searches.add(s);
-        }
     }
 
     public static final Parcelable.Creator<Model> CREATOR
@@ -74,4 +72,8 @@ public class Model implements Parcelable, Serializable {
             return new Model[size];
         }
     };
+
+    public void setFinder(FlatFinder finder) {
+        this.finder = finder;
+    }
 }

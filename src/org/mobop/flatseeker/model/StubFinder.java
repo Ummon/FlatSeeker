@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StubFinder extends FlatFinder {
-
     public StubFinder() {
     }
 
@@ -18,16 +17,16 @@ public class StubFinder extends FlatFinder {
 
         try {
             if (params.city.toLowerCase().equals("neuchatel")) {
-                flats.add(new Flat(3.0, 67, 1200, 120, format.parse("01/03/2015"), "Neuchâtel", "Faubourg de l'Hopital", 2, 2));
-                flats.add(new Flat(3.5, 70, 1350, 120, format.parse("01/04/2015"), "Neuchâtel", "Avenue des Terreaux", 4, 1));
-                flats.add(new Flat(5.0, 130, 2100, 120, format.parse("01/02/2015"), "Neuchâtel", "Rue des Battieux", 7, 5));
+                flats.add(new Flat(3.0, 67, 1200, 120, format.parse("01/03/2015"), "Neuchâtel", "Faubourg de l'Hopital", 2, 2, "Robert Crot", "021/123 45 78"));
+                flats.add(new Flat(3.5, 70, 1350, 120, format.parse("01/04/2015"), "Neuchâtel", "Avenue des Terreaux", 4, 1, "Robert Crot", "021/123 45 78"));
+                flats.add(new Flat(5.0, 130, 2100, 120, format.parse("01/02/2015"), "Neuchâtel", "Rue des Battieux", 7, 5, "Robert Crot", "021/123 45 78"));
             } else if (params.city.toLowerCase().equals("lausanne")) {
-                flats.add(new Flat(5.0, 170, 2400, 280, format.parse("15/03/2015"), "Lausanne", "Rue St-Roch", 1, 3));
-                flats.add(new Flat(2.5, 57, 920, 60, format.parse("01/04/2015"), "Lausanne", "Avenue du Théatre", 56, 3));
-                flats.add(new Flat(1.5, 43, 650, 40, format.parse("15/02/2015"), "Lausanne", "Rue Caroline", 6, 2));
-                flats.add(new Flat(3.0, 62, 1400, 180, format.parse("01/02/2015"), "Neuchâtel", "Rue Centrale", 24, 8));
+                flats.add(new Flat(5.0, 170, 2400, 280, format.parse("15/03/2015"), "Lausanne", "Rue St-Roch", 1, 3, "Robert Crot", "021/123 45 78"));
+                flats.add(new Flat(2.5, 57, 920, 60, format.parse("01/04/2015"), "Lausanne", "Avenue du Théatre", 56, 3, "Robert Crot", "021/123 45 78"));
+                flats.add(new Flat(1.5, 43, 650, 40, format.parse("15/02/2015"), "Lausanne", "Rue Caroline", 6, 2, "Robert Crot", "021/123 45 78"));
+                flats.add(new Flat(3.0, 62, 1400, 180, format.parse("01/02/2015"), "Neuchâtel", "Rue Centrale", 24, 1, "Robert Crot", "021/123 45 78"));
             } else if (params.city.toLowerCase().equals("geneve")) {
-                flats.add(new Flat(3.5, 67, 1700, 210, format.parse("08/03/2015"), "Genêve", "Rue des Alpes", 3, 4));
+                flats.add(new Flat(3.5, 67, 1700, 210, format.parse("08/03/2015"), "Genêve", "Rue des Alpes", 3, 4, "Robert Crot", "021/123 45 78"));
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -41,27 +40,4 @@ public class StubFinder extends FlatFinder {
 
         return flats;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    private StubFinder(Parcel in) {
-    }
-
-    public static final Parcelable.Creator<StubFinder> CREATOR
-            = new Parcelable.Creator<StubFinder>() {
-        public StubFinder createFromParcel(Parcel in) {
-            return new StubFinder(in);
-        }
-
-        public StubFinder[] newArray(int size) {
-            return new StubFinder[size];
-        }
-    };
 }

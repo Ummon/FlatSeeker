@@ -2,8 +2,8 @@ package org.mobop.flatseeker;
 
 import android.content.Context;
 
+import org.mobop.flatseeker.model.ImmoStreetFinder;
 import org.mobop.flatseeker.model.Model;
-import org.mobop.flatseeker.model.StubFinder;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -16,12 +16,14 @@ public class StorageManager{
     public static final String FILE_ACTUAL = "flatseeker_storage_actual";
 
     public static Model loadModel(Context context){
-        Model model = (Model) loadObject(FILE_MODEL, context);
+        Model model = (Model)loadObject(FILE_MODEL, context);
 
-        if(model!=null){
+        if (model != null) {
+            model.setFinder(new ImmoStreetFinder());
             return model;
         }
-        return new Model(new StubFinder());
+
+        return new Model(new ImmoStreetFinder());
     }
 
 //    public static ActualSearch loadActualSearch(){

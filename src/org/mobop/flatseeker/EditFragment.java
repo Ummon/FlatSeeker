@@ -19,6 +19,7 @@ import org.mobop.flatseeker.model.Search;
 import org.mobop.flatseeker.model.SearchParams;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class EditFragment extends Fragment{
@@ -100,7 +101,8 @@ public class EditFragment extends Fragment{
                                 Double.valueOf(roomEndTbx.getText().toString())),
                         new Range<Integer>(
                                 Integer.valueOf(sizeStartTbx.getText().toString()),
-                                Integer.valueOf(sizeEndTbx.getText().toString()))
+                                Integer.valueOf(sizeEndTbx.getText().toString())),
+                        Calendar.getInstance() // TODO.
                 );
 
                 handler = new Handler() {

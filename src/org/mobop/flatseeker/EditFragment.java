@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class EditFragment extends Fragment{
+public class EditFragment extends Fragment {
 
     Model model;
     ActualSearch actualSearch;
-    
+
     Button save;
     EditText cityTbx;
     EditText radiusTbx;
@@ -42,22 +42,20 @@ public class EditFragment extends Fragment{
     Handler handler;
 
     // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
-    public void initEditFragment(Model model,ActualSearch actualSearch){
+    public void initEditFragment(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.model = getArguments().getParcelable(Model.class.getName());
         this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
 //        setRetainInstance(true);
     }
 
-    public static final EditFragment newInstance(Model model, ActualSearch actualSearch)
-    {
+    public static final EditFragment newInstance(Model model, ActualSearch actualSearch) {
         EditFragment f = new EditFragment();
 //        f.model = model;
 //        f.actualSearch = actualSearch;
@@ -73,15 +71,15 @@ public class EditFragment extends Fragment{
         View v = inflater.inflate(R.layout.edit_layout, container, false);
 
         viewPager = (ViewPager) getActivity().findViewById(R.id.pager);
-        
-        cityTbx = (EditText)v.findViewById(R.id.editCityInput);
-        radiusTbx = (EditText)v.findViewById(R.id.editRangeInput);
-        priceStartTbx = (EditText)v.findViewById(R.id.editPriceStartInput);
-        priceEndTbx = (EditText)v.findViewById(R.id.editPriceEndInput);
-        roomStartTbx = (EditText)v.findViewById(R.id.editRoomStartInput);
-        roomEndTbx = (EditText)v.findViewById(R.id.editRoomEndInput);
-        sizeStartTbx = (EditText)v.findViewById(R.id.editSizeStartInput);
-        sizeEndTbx = (EditText)v.findViewById(R.id.editSizeEndInput);
+
+        cityTbx = (EditText) v.findViewById(R.id.editCityInput);
+        radiusTbx = (EditText) v.findViewById(R.id.editRangeInput);
+        priceStartTbx = (EditText) v.findViewById(R.id.editPriceStartInput);
+        priceEndTbx = (EditText) v.findViewById(R.id.editPriceEndInput);
+        roomStartTbx = (EditText) v.findViewById(R.id.editRoomStartInput);
+        roomEndTbx = (EditText) v.findViewById(R.id.editRoomEndInput);
+        sizeStartTbx = (EditText) v.findViewById(R.id.editSizeStartInput);
+        sizeEndTbx = (EditText) v.findViewById(R.id.editSizeEndInput);
 
         fill();
 
@@ -113,14 +111,15 @@ public class EditFragment extends Fragment{
                     }
                 };
 
-                myPd_ring=ProgressDialog.show(getActivity(), "Please wait", "Loading flats, please wait..", true);
+                myPd_ring = ProgressDialog.show(getActivity(), "Please wait", "Loading flats, please wait..", true);
                 myPd_ring.setCancelable(true);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
                         try {
                             model.newSearch(test);
-                        } catch(Exception e){}
+                        } catch (Exception e) {
+                        }
                         handler.sendEmptyMessage(0);
                     }
                 }).start();
@@ -130,18 +129,18 @@ public class EditFragment extends Fragment{
         return v;
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         fill();
     }
 
-    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+    public void setModelAndActualSearch(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
     }
 
-    private void fill(){
-        if(actualSearch.get()>-1){
+    private void fill() {
+        if (actualSearch.get() > -1) {
             List<Search> l = new ArrayList<Search>(model.getSearches());
             SearchParams s = l.get(actualSearch.get()).getParams();
 
@@ -153,7 +152,7 @@ public class EditFragment extends Fragment{
             roomEndTbx.setText(String.valueOf(s.numberOfRooms.to));
             sizeStartTbx.setText(String.valueOf(s.size.from));
             sizeEndTbx.setText(String.valueOf(s.size.to));
-        }else{
+        } else {
 //            cityTbx.setText("");
 //            radiusTbx.setText("");
 //            priceStartTbx.setText("");

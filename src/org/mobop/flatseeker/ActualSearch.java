@@ -3,15 +3,17 @@ package org.mobop.flatseeker;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ActualSearch implements Parcelable{
+public class ActualSearch implements Parcelable {
     int actualSearch = -1;
 
-    public ActualSearch(){ }
-    public int get(){
+    public ActualSearch() {
+    }
+
+    public int get() {
         return actualSearch;
     }
 
-    public void set(int actualSearch){
+    public void set(int actualSearch) {
         this.actualSearch = actualSearch;
     }
 

@@ -21,45 +21,42 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     public static final int SEARCH_ID = 1;
     public static final int MAP_ID = 2;
 
-    public FragmentPageAdapter(FragmentManager fm,Model model,ActualSearch actualSearch) {
+    public FragmentPageAdapter(FragmentManager fm, Model model, ActualSearch actualSearch) {
         super(fm);
         this.model = model;
         this.actualSearch = actualSearch;
-        /*model.newSearchTEST("Neuchatel");
-        model.newSearchTEST("Lausanne");
-        model.newSearchTEST("Zurich");*/
     }
 
     @Override
     public Fragment getItem(int arg0) {
-        
+
         switch (arg0) {
-        case EDIT_ID:
-            if(editFragment==null)
-                editFragment = EditFragment.newInstance(model,actualSearch);
+            case EDIT_ID:
+                if (editFragment == null)
+                    editFragment = EditFragment.newInstance(model, actualSearch);
 //                editFragment.initEditFragment(model, actualSearch);
-            return editFragment;
-        case SEARCH_ID:
-            if(searchListFragment==null)
-                searchListFragment = SearchListFragment.newInstance(model,actualSearch);
+                return editFragment;
+            case SEARCH_ID:
+                if (searchListFragment == null)
+                    searchListFragment = SearchListFragment.newInstance(model, actualSearch);
 //                searchListFragment.initSearchListFragment(model, actualSearch);
-            return searchListFragment;
-        case MAP_ID:
-    //	    return SupportMapFragment.newInstance();
-            if(mapFragment==null)
-                mapFragment = MapFragment.newInstance(model,actualSearch);
+                return searchListFragment;
+            case MAP_ID:
+                //	    return SupportMapFragment.newInstance();
+                if (mapFragment == null)
+                    mapFragment = MapFragment.newInstance(model, actualSearch);
 //                mapFragment.initMapFragment(model, actualSearch);
-            return mapFragment;
-        default:
-            break;
+                return mapFragment;
+            default:
+                break;
         }
         return null;
     }
 
     @Override
     public int getCount() {
-	// we got 3 fragments list/map/edit
-	    return 3;
+        // we got 3 fragments list/map/edit
+        return 3;
     }
 
     public void refresh(ActionBar.Tab tab) {
@@ -86,21 +83,21 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
         }
     }
 
-    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+    public void setModelAndActualSearch(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
-        if(editFragment!=null) {
+        if (editFragment != null) {
             editFragment.setModelAndActualSearch(model, actualSearch);
         }
-        if(searchListFragment!=null) {
+        if (searchListFragment != null) {
             searchListFragment.setModelAndActualSearch(model, actualSearch);
         }
-        if(mapFragment!=null) {
+        if (mapFragment != null) {
             mapFragment.setModelAndActualSearch(model, actualSearch);
         }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            searchListFragment.onActivityResult(requestCode,resultCode,data);
+        searchListFragment.onActivityResult(requestCode, resultCode, data);
     }
 }

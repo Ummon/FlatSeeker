@@ -25,10 +25,10 @@ public class NoteActivity extends Activity {
         final Intent intent = getIntent();
         final Flat flat = intent.getParcelableExtra(NOTE_FLAT);
 
-        final EditText editText = (EditText)findViewById(R.id.noteNoteTbx);
+        final EditText editText = (EditText) findViewById(R.id.noteNoteTbx);
         editText.setText(flat.getNote());
 
-        Button saveBtn = (Button)findViewById(R.id.noteSaveBtn);
+        Button saveBtn = (Button) findViewById(R.id.noteSaveBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -32,7 +32,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
 
     Model model;
     ActualSearch actualSearch;
-    
+
     public SearchExpandableListAdapter(Fragment act, SparseArray<Search> groups, Model model, ActualSearch actualSearch) {
         activity = act.getActivity();
         this.groups = groups;
@@ -72,9 +72,9 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            Intent intent = new Intent(activity, NoteActivity.class);
-            intent.putExtra(NoteActivity.NOTE_FLAT, (android.os.Parcelable) flat);
-            activity.startActivityForResult(intent,TAG_NOTE);
+                Intent intent = new Intent(activity, NoteActivity.class);
+                intent.putExtra(NoteActivity.NOTE_FLAT, (android.os.Parcelable) flat);
+                activity.startActivityForResult(intent, TAG_NOTE);
             }
         });
         return convertView;
@@ -98,8 +98,8 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public void onGroupCollapsed(int groupPosition) {
         super.onGroupCollapsed(groupPosition);
-        
-        if(groupPosition==actualSearch.get()) {
+
+        if (groupPosition == actualSearch.get()) {
             actualSearch.set(-1);
         }
     }

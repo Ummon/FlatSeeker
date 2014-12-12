@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.mobop.flatseeker.model.Flat;
@@ -130,6 +132,7 @@ public class MapFragment extends Fragment {
 //                map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
 //
             StringBuilder sb = new StringBuilder();
+            LatLngBounds.Builder builderBounds = new LatLngBounds.Builder();
             for (Flat flat : search.getResult()) {
                 sb.delete(0, sb.length());
                 sb.append(flat.city).append(" ".intern()).append(flat.street)
@@ -142,7 +145,7 @@ public class MapFragment extends Fragment {
                 }
 
 
-                sb.delete(0,sb.length());
+                sb.delete(0, sb.length());
                 sb.append("Room : ").append(flat.numberOfRooms).append("\n");
                 sb.append("Free from : ").append(new SimpleDateFormat("dd/MMMM/yyyy").format(flat.freeFrom)).append("\n");
                 sb.append("Additional expenses : ").append(flat.additionalExpenses).append("\n");
@@ -151,12 +154,17 @@ public class MapFragment extends Fragment {
                 sb.append("Size(m^2) : ").append(flat.size).append("\n");
 
                 assert address != null;
-                map.addMarker(new MarkerOptions()
-                        .title(flat.street+" ".intern()+String.valueOf(flat.number))
+                MarkerOptions marker = new MarkerOptions()
+                        .title(flat.street + " ".intern() + String.valueOf(flat.number))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.house))
                         .snippet(sb.toString())
-                        .position(new LatLng(address.getLatitude(), address.getLongitude())));
+                        .position(new LatLng(address.getLatitude(), address.getLongitude()));
+                map.addMarker(marker);
+                builderBounds.include(marker.getPosition());
             }
+            LatLngBounds bounds = builderBounds.build();
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 40);//10 = padding
+            map.animateCamera(cu);
         }
     }
 }

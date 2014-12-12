@@ -1,7 +1,10 @@
 package org.mobop.flatseeker;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -36,10 +39,34 @@ public class EditFragment extends Fragment{
     EditText sizeEndTbx;
     ViewPager viewPager;
 
+    ProgressDialog myPd_ring;
+    Handler handler;
+
     // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
     public void initEditFragment(Model model,ActualSearch actualSearch){
         this.model = model;
         this.actualSearch = actualSearch;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        this.model = getArguments().getParcelable(Model.class.getName());
+        this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
+//        setRetainInstance(true);
+    }
+
+    public static final EditFragment newInstance(Model model, ActualSearch actualSearch)
+    {
+        EditFragment f = new EditFragment();
+//        f.model = model;
+//        f.actualSearch = actualSearch;
+        Bundle bdl = new Bundle(2);
+        bdl.putParcelable(Model.class.getName(), model);
+        bdl.putParcelable(ActualSearch.class.getName(), actualSearch);
+        f.setArguments(bdl);
+        return f;
     }
 
     @Override
@@ -64,7 +91,7 @@ public class EditFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 // save the new search in the global model
-                SearchParams test = new SearchParams(
+                final SearchParams test = new SearchParams(
                         cityTbx.getText().toString(),
                         Integer.valueOf(radiusTbx.getText().toString()),
                         new Range<Integer>(
@@ -78,10 +105,25 @@ public class EditFragment extends Fragment{
                                 Integer.valueOf(sizeEndTbx.getText().toString()))
                 );
 
-                model.newSearch(test);
+                handler = new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        viewPager.setCurrentItem(FragmentPageAdapter.SEARCH_ID);
+                        myPd_ring.dismiss();
+                    }
+                };
 
-
-            viewPager.setCurrentItem(FragmentPageAdapter.SEARCH_ID);
+                myPd_ring=ProgressDialog.show(getActivity(), "Please wait", "Loading flats, please wait..", true);
+                myPd_ring.setCancelable(true);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            model.newSearch(test);
+                        } catch(Exception e){}
+                        handler.sendEmptyMessage(0);
+                    }
+                }).start();
             }
         });
 

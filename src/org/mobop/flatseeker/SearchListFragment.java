@@ -3,6 +3,7 @@ package org.mobop.flatseeker;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.graphics.AvoidXfermode;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,27 @@ public class SearchListFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+        this.model = getArguments().getParcelable(Model.class.getName());
+        this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
+//        setRetainInstance(true);
+
+        createData();
+    }
+
+    public static final SearchListFragment newInstance(Model model, ActualSearch actualSearch)
+    {
+        SearchListFragment f = new SearchListFragment();
+        Bundle bdl = new Bundle(2);
+        bdl.putParcelable(Model.class.getName(), model);
+        bdl.putParcelable(ActualSearch.class.getName(), actualSearch);
+        f.setArguments(bdl);
+        return f;
+    }
+
+    @Override
     public void onResume(){
         if(searchExpandable==null){return;}
 
@@ -49,7 +71,6 @@ public class SearchListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list_layout, null);
 
-        createData();
         ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.listView);
         searchExpandable = new SearchExpandableListAdapter(this,groups,model,actualSearch);
         elv.setAdapter(searchExpandable);
@@ -71,6 +92,7 @@ public class SearchListFragment extends Fragment {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         switch (requestCode){
             case SearchExpandableListAdapter.TAG_NOTE:
                 if(data==null){

@@ -26,8 +26,8 @@ import java.util.Locale;
 
 public class MapFragment extends Fragment {
 
-    static Model model;
-    static ActualSearch actualSeach;
+    Model model;
+    ActualSearch actualSearch;
 
     GoogleMap map;
     SupportMapFragment mSupportMapFragment;
@@ -36,7 +36,7 @@ public class MapFragment extends Fragment {
     // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
     public void initMapFragment(Model model, ActualSearch actualSearch){
         this.model = model;
-        this.actualSeach = actualSearch;
+        this.actualSearch = actualSearch;
     }
     
     @Override
@@ -68,17 +68,22 @@ public class MapFragment extends Fragment {
         
     	return inflater.inflate(R.layout.map_layout, container, false);
     }
+
+    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+        this.model = model;
+        this.actualSearch = actualSearch;
+    }
     
     public void refreshPosition(){
 
-        if(actualSeach.get()!=-1) {
+        if(actualSearch.get()!=-1) {
 
             Geocoder geoCoder = new Geocoder(getActivity(), Locale.getDefault());
             List<Search> l = new ArrayList<Search>(model.getSearches());
 
             // TODO
             try {
-                List<Address> address = geoCoder.getFromLocationName(l.get(actualSeach.get()).getParams().city, 10);
+                List<Address> address = geoCoder.getFromLocationName(l.get(actualSearch.get()).getParams().city, 10);
                 double latitude = address.get(0).getLatitude();
                 double longitude = address.get(0).getLongitude();
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(

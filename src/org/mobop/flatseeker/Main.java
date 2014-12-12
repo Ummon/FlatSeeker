@@ -12,19 +12,26 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import org.mobop.flatseeker.model.Model;
+import org.mobop.flatseeker.model.StubFinder;
+
 import static org.mobop.flatseeker.R.menu.main;
 
 public class Main extends FragmentActivity implements TabListener {
     private ActionBar actionBar;
     private ViewPager viewPager;
     private FragmentPageAdapter fpAdapter;
+    private Model model;
+    private ActualSearch actualSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        fpAdapter = new FragmentPageAdapter(getSupportFragmentManager());
+        model = StorageManager.loadModel(getApplicationContext());
+        actualSearch = new ActualSearch();
+        fpAdapter = new FragmentPageAdapter(getSupportFragmentManager(),model,actualSearch);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(fpAdapter);
 
@@ -84,6 +91,22 @@ public class Main extends FragmentActivity implements TabListener {
     @Override
     public void onTabUnselected(Tab tab, FragmentTransaction ft) {
     }
+
+    public void onPause(){
+        super.onPause();
+        StorageManager.saveModel(model,getApplicationContext());
+    }
+
+    public void onResume(){
+        super.onResume();
+        model = StorageManager.loadModel(getApplicationContext());
+        actualSearch = new ActualSearch();
+        fpAdapter.setModelAndActualSearch(model,actualSearch);
+        if(actualSearch==null){
+            Toast.makeText(getApplicationContext(),"actualSeach est null shiiiiit",Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         fpAdapter.onActivityResult(requestCode,resultCode,data);

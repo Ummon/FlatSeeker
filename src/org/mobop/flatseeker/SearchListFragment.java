@@ -1,6 +1,7 @@
 package org.mobop.flatseeker;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,8 +26,8 @@ public class SearchListFragment extends Fragment {
     SparseArray<Search> groups = new SparseArray<Search>();
     SearchExpandableListAdapter searchExpandable;
 
-    static Model model;
-    static ActualSearch actualSearch;
+    Model model;
+    ActualSearch actualSearch;
 
     // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
     public void initSearchListFragment(Model model, ActualSearch actualSearch){
@@ -37,7 +38,7 @@ public class SearchListFragment extends Fragment {
     @Override
     public void onResume(){
         if(searchExpandable==null){return;}
-        
+
         createData();
         searchExpandable.notifyDataSetChanged();
         super.onResume();
@@ -47,8 +48,6 @@ public class SearchListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list_layout, null);
-
-
 
         createData();
         ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.listView);
@@ -64,6 +63,11 @@ public class SearchListFragment extends Fragment {
         for (Search element : searches) {
             groups.append(groups.size(), element);
         }
+    }
+
+    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+        this.model = model;
+        this.actualSearch = actualSearch;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

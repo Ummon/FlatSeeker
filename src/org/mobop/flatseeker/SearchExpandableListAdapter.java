@@ -75,7 +75,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onClick(View v) {
             Intent intent = new Intent(activity, NoteActivity.class);
-            intent.putExtra(NoteActivity.NOTE_FLAT, flat);
+            intent.putExtra(NoteActivity.NOTE_FLAT, (android.os.Parcelable) flat);
             activity.startActivityForResult(intent,TAG_NOTE);
             }
         });

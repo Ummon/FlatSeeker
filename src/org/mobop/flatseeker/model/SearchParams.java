@@ -3,9 +3,10 @@ package org.mobop.flatseeker.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SearchParams implements Cloneable, Parcelable {
+public class SearchParams implements Cloneable, Parcelable, Serializable {
     public String city;
     public int radius; // [m].
     public Range<Integer> price;

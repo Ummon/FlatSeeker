@@ -1,6 +1,8 @@
 package org.mobop.flatseeker.model;
 
-public class Range<T> implements Cloneable {
+import java.io.Serializable;
+
+public class Range<T> implements Cloneable, Serializable {
     public final T from;
     public final T to;
 

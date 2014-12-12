@@ -3,9 +3,10 @@ package org.mobop.flatseeker.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Flat implements Parcelable {
+public class Flat implements Parcelable, Serializable {
     public final double numberOfRooms;
     public final int size; // [m²].
 

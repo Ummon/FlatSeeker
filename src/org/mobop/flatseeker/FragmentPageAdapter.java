@@ -15,15 +15,17 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     SearchListFragment searchListFragment;
     MapFragment mapFragment;
     Model model;
-    ActualSearch actualSearch = new ActualSearch();
+    ActualSearch actualSearch;
+    ActionBar.Tab actualTab;
 
     public static final int EDIT_ID = 0;
     public static final int SEARCH_ID = 1;
     public static final int MAP_ID = 2;
 
-    public FragmentPageAdapter(FragmentManager fm) {
+    public FragmentPageAdapter(FragmentManager fm,Model model,ActualSearch actualSearch) {
         super(fm);
-        model = new Model(new StubFinder());
+        this.model = model;
+        this.actualSearch = actualSearch;
         /*model.newSearchTEST("Neuchatel");
         model.newSearchTEST("Lausanne");
         model.newSearchTEST("Zurich");*/
@@ -62,22 +64,40 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     }
 
     public void refresh(ActionBar.Tab tab) {
-        if(tab.getPosition()==SEARCH_ID) {
-            if (searchListFragment != null) {
-                searchListFragment.onResume();
-            }
-        }
+        actualTab = tab;
 
-        if(tab.getPosition()==MAP_ID) {
-            if (mapFragment != null) {
-                mapFragment.refreshPosition();
-            }
-        }
+        switch (tab.getPosition()) {
+            case SEARCH_ID:
+                if (searchListFragment != null) {
+                    searchListFragment.onResume();
+                }
+                break;
 
-        if(tab.getPosition()==EDIT_ID) {
-            if (editFragment != null) {
-                editFragment.onResume();
-            }
+            case MAP_ID:
+                if (mapFragment != null) {
+                    mapFragment.refreshPosition();
+                }
+                break;
+
+            case EDIT_ID:
+                if (editFragment != null) {
+                    editFragment.onResume();
+                }
+                break;
+        }
+    }
+
+    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+        this.model = model;
+        this.actualSearch = actualSearch;
+        if(editFragment!=null) {
+            editFragment.setModelAndActualSearch(model, actualSearch);
+        }
+        if(searchListFragment!=null) {
+            searchListFragment.setModelAndActualSearch(model, actualSearch);
+        }
+        if(mapFragment!=null) {
+            mapFragment.setModelAndActualSearch(model, actualSearch);
         }
     }
 

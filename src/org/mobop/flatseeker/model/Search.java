@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.ParcelableSpan;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * To create a new search use 'Model.newSearch(..)'.
  */
-public class Search implements Parcelable {
+public class Search implements Parcelable, Serializable {
     Model model;
     SearchParams params;
     ArrayList<Flat> result = new ArrayList<Flat>();

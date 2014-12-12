@@ -35,13 +35,12 @@ public class NoteActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent();
                 flat.setNote(String.valueOf(editText.getText()));
-                intent.putExtra(NOTE_MESSAGE, flat);
+                intent.putExtra(NOTE_MESSAGE, (android.os.Parcelable) flat);
                 setResult(SearchExpandableListAdapter.TAG_NOTE, intent);
                 finish();
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

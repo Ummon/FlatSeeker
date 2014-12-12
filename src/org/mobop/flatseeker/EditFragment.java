@@ -22,8 +22,8 @@ import java.util.List;
 
 public class EditFragment extends Fragment{
 
-    static Model model;
-    static ActualSearch actualSearch;
+    Model model;
+    ActualSearch actualSearch;
     
     Button save;
     EditText cityTbx;
@@ -93,6 +93,11 @@ public class EditFragment extends Fragment{
         fill();
     }
 
+    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+        this.model = model;
+        this.actualSearch = actualSearch;
+    }
+
     private void fill(){
         if(actualSearch.get()>-1){
             List<Search> l = new ArrayList<Search>(model.getSearches());
@@ -117,7 +122,6 @@ public class EditFragment extends Fragment{
 //            sizeEndTbx.setText("");
         }
     }
-
 }
 
 

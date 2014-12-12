@@ -13,7 +13,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
-import org.mobop.flatseeker.model.StubFinder;
+import org.mobop.flatseeker.model.ImmoStreetFinder;
 
 import static org.mobop.flatseeker.R.menu.main;
 

@@ -8,7 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class StubFinder extends FlatFinder {
-
     public StubFinder() {
     }
 
@@ -41,26 +40,4 @@ public class StubFinder extends FlatFinder {
 
         return flats;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-    }
-
-    private StubFinder(Parcel in) {
-    }
-
-    public static final Parcelable.Creator<StubFinder> CREATOR = new Parcelable.Creator<StubFinder>() {
-        public StubFinder createFromParcel(Parcel in) {
-            return new StubFinder(in);
-        }
-
-        public StubFinder[] newArray(int size) {
-            return new StubFinder[size];
-        }
-    };
 }

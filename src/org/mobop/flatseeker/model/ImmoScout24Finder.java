@@ -19,15 +19,20 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.HttpURLConnection;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ImmoScout24Finder extends FlatFinder {
 
     static final String CHARSET = "UTF-8";
     static final int TIMEOUT_REQUEST = 6000; // [ms]. (6 s).
+    static final int MAX_NUMBER_FLAT_RESULT = 3; // 3 is for testing.
 
     public ImmoScout24Finder() {}
 
@@ -196,6 +201,12 @@ public class ImmoScout24Finder extends FlatFinder {
         return urlsResult;
     }
 
+    static Pattern addressPattern = Pattern.compile("^\\s*(.*?)(\\d*)\\s*$");
+    static Pattern numberPattern = Pattern.compile("^(?:.*?)(\\d+).*$");
+    // static Pattern numberPattern = Pattern.compile("^\\s*(\\d+)\\s*$"); // Old version, a bit less powerfull.
+    static Pattern freeNowPattern = Pattern.compile("^\\s*Immédiatement\\s*");
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
     /**
      * Load the given URL and parse the result as a flat.
      */
@@ -209,31 +220,76 @@ public class ImmoScout24Finder extends FlatFinder {
         connection.header("Accept-Language", "en-US,en;q=0.5");
 
         Document doc = connection.get();
-        Elements address = doc.select("td.adr > div:nth-child(1)");
-        Elements zip = doc.select("span.postal-code:nth-child(1)");
-        Elements city = doc.select("span.locality:nth-child(2)");
-        Elements numberOfRooms = doc.select(".base-data > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(2)");
-        Elements size = doc.select(".base-data > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(2)");
-        Elements dateFree = doc.select(".base-data > tbody:nth-child(1) > tr:nth-child(5) > td:nth-child(2)");
-        Elements additionalExpenses = doc.select(".prices > span:nth-child(2) > span:nth-child(2)");
-        Elements price = doc.select(".prices > span:nth-child(1) > span:nth-child(2)");
-        Elements floor = doc.select("div.content-section:nth-child(5) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2)");
-        Elements contact = doc.select(".ref");
-        Elements estateAgent = doc.select(".lister > div:nth-child(1)");
 
-        // TODO.
+        String addressHtml = doc.select("td.adr > div:nth-child(1)").html();
+        Matcher addressMatcher = addressPattern.matcher(addressHtml);
+        if (!addressMatcher.matches() || addressMatcher.groupCount() < 2)
+            return null;
+        String street = addressMatcher.group(1);
+        String streetNumber = addressMatcher.group(2);
+
+        String zipHtml = doc.select("span.postal-code:nth-child(1)").html();
+        Matcher zipMatcher = numberPattern.matcher(zipHtml);
+        String zip = "0";
+        if (zipMatcher.matches() && zipMatcher.groupCount() == 1)
+            zip = zipMatcher.group(1);
+
+        String city = doc.select("span.locality:nth-child(2)").html().trim();
+
+        String numberOfRoomsHtml = doc.select(".base-data > tbody:nth-child(1) > tr:nth-child(3) > td:nth-child(2)").html();
+        Matcher numberOfRoomsMatcher = numberPattern.matcher(numberOfRoomsHtml);
+        String numberOfRooms = "0";
+        if (numberOfRoomsMatcher.matches() && numberOfRoomsMatcher.groupCount() == 1)
+            numberOfRooms = numberOfRoomsMatcher.group(1);
+
+        String sizeHtml = doc.select(".base-data > tbody:nth-child(1) > tr:nth-child(4) > td:nth-child(2)").html();
+        Matcher sizeMatcher = numberPattern.matcher(sizeHtml);
+        String size = "0";
+        if (sizeMatcher.matches() && sizeMatcher.groupCount() == 1)
+            size = sizeMatcher.group(1);
+
+        String dateFreeHtml = doc.select(".base-data > tbody:nth-child(1) > tr:nth-child(5) > td:nth-child(2)").html();
+        Date dateFree = null;
+        if (!freeNowPattern.matcher(dateFreeHtml).matches())
+            try {
+                dateFree = dateFormat.parse(dateFreeHtml);
+            } catch (ParseException e) {
+                Log.e(this.getClass().toString(), e.toString());
+            }
+
+        String additionalExpensesHtml = doc.select(".prices > span:nth-child(2) > span:nth-child(2)").html().replaceAll("'", "");
+        Matcher additionalExpensesMatcher = numberPattern.matcher(additionalExpensesHtml);
+        String additionalExpenses = "0";
+        if (additionalExpensesMatcher.matches() && additionalExpensesMatcher.groupCount() == 1)
+            additionalExpenses = additionalExpensesMatcher.group(1);
+
+        String priceHtml = doc.select(".prices > span:nth-child(1) > span:nth-child(2)").html().replaceAll("'", "");
+        Matcher priceMatcher = numberPattern.matcher(priceHtml);
+        String price = "0";
+        if (priceMatcher.matches() && priceMatcher.groupCount() == 1)
+            price = priceMatcher.group(1);
+
+        String floorHtml = doc.select("div.content-section:nth-child(5) > table:nth-child(2) > tbody:nth-child(1) > tr:nth-child(1) > td:nth-child(2)").html();
+        Matcher floorMatcher = numberPattern.matcher(floorHtml);
+        String floor = "0";
+        if (floorMatcher.matches() && floorMatcher.groupCount() == 1)
+            floor = floorMatcher.group(1);
+
+        String contact = doc.select(".ref").html().trim();
+        String estateAgent = doc.select(".lister > div:nth-child(1)").html().trim();
+
         return new Flat(
-            4.5,
-            100,
-            2000,
-            220,
-            Calendar.getInstance().getTime(),
-            "Neuchatel",
-            "Battieux",
-            18,
-            3,
-            "Gérance",
-            "078 123 43 23"
+            Double.parseDouble(numberOfRooms),
+            Integer.parseInt(size),
+            Integer.parseInt(price),
+            Integer.parseInt(additionalExpenses),
+            dateFree,
+            city,
+            street,
+            Integer.parseInt(streetNumber),
+            Integer.parseInt(floor),
+            estateAgent,
+            contact
         );
     }
 
@@ -246,8 +302,17 @@ public class ImmoScout24Finder extends FlatFinder {
 
             List<Flat> flatsResult = new ArrayList<Flat>();
 
-            if (!urls.isEmpty())
-                flatsResult.add(this.getFlat(urls.get(0)));
+            // TODO: parallelize with http://developer.android.com/reference/java/util/concurrent/ExecutorService.html.
+            int i = 0;
+            for (String url : urls) {
+                Flat flat = this.getFlat(url);
+                if (flat != null) {
+                    flatsResult.add(flat);
+                    i++;
+                }
+                if (i >= MAX_NUMBER_FLAT_RESULT)
+                    break;
+            }
 
             return flatsResult;
         } catch (Exception e) {

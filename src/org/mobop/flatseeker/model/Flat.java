@@ -13,7 +13,7 @@ public class Flat implements Parcelable, Serializable {
     public final int price;
     public final int additionalExpenses;
 
-    public final Date freeFrom;
+    public final Date freeFrom; // If 'null' then already free.
 
     public final String city;
     public final String street;

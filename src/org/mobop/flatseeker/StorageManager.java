@@ -3,6 +3,7 @@ package org.mobop.flatseeker;
 import android.content.Context;
 
 import org.mobop.flatseeker.model.FlatFinder;
+import org.mobop.flatseeker.model.ImmoScout24Finder;
 import org.mobop.flatseeker.model.ImmoStreetFinder;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.StubFinder;
@@ -20,7 +21,7 @@ public class StorageManager{
     public static Model loadModel(Context context){
         Model model = (Model)loadObject(FILE_MODEL, context);
 
-        FlatFinder finder = new StubFinder();//new ImmoStreetFinder();
+        FlatFinder finder = new ImmoScout24Finder();
 
         if (model != null) {
             model.setFinder(finder);

@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/editPriceStartInput"
             android:inputType="numberDecimal"
-            android:text="1"
+            android:text="1500"
             android:hint="@string/start_range" />
 
         <TextView
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:id="@+id/editPriceEndInput"
-            android:text="10"
+            android:text="2800"
             android:hint="@string/end_range" />
     </LinearLayout>
 
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/editRoomStartInput"
             android:inputType="number"
-            android:text="1"
+            android:text="4"
             android:hint="@string/start_range" />
 
         <TextView
@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/editRoomEndInput"
             android:inputType="number"
-            android:text="4"
+            android:text="6.5"
             android:hint="@string/end_range" />
     </LinearLayout>
 
@@ -127,7 +127,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
             android:id="@+id/editSizeStartInput"
-            android:text="1"
+            android:text="60"
             android:hint="@string/start_range" />
 
         <TextView
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberSigned"
             android:id="@+id/editSizeEndInput"
-            android:text="4"
+            android:text="120"
             android:hint="@string/end_range" />
     </LinearLayout>
 

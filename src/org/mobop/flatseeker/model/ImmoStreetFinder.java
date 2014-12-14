@@ -9,6 +9,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -69,7 +70,7 @@ public class ImmoStreetFinder extends FlatFinder {
     }
 
     /**
-     * Retrieve the location ID from a arbitrary location.
+     * Retrieve the location ID from an arbitrary location.
      */
     private Location getLocation(String location) throws IOException {
 
@@ -148,10 +149,12 @@ public class ImmoStreetFinder extends FlatFinder {
             connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
             connection.header("Accept-Language", "en-US,en;q=0.5");
             connection.header("Accept-Encoding", "gzip, deflate");
-            connection.header("Referer", "http://www.immostreet.ch/fr/SearchEngine/Louer/Suisse/Appartement?AreaId=d824b5d7-2071-4a07-a51a-44e34a2c362e&AreaIdAgregate=d824b5d7-2071-4a07-a51a-44e34a2c362e&PropertySubTypeGroupID=2&CurrencyID=CHF&NumberOfRoomsMin=3&SurfaceLivibleMin=60&MonthlyRentMin=1000&MonthlyRentMax=2000&AvailableFromMin=01.05.2015&SearchCriteriaImmoId=b8188145-da3b-2217-7301-088a6c30d307");
-            connection.header("Connection", "keep-alive");
+            // connection.header("Referer", "http://www.immostreet.ch/fr/SearchEngine/Louer/Suisse/Appartement?AreaId=d824b5d7-2071-4a07-a51a-44e34a2c362e&AreaIdAgregate=d824b5d7-2071-4a07-a51a-44e34a2c362e&PropertySubTypeGroupID=2&CurrencyID=CHF&NumberOfRoomsMin=3&SurfaceLivibleMin=60&MonthlyRentMin=1000&MonthlyRentMax=2000&AvailableFromMin=01.05.2015&SearchCriteriaImmoId=b8188145-da3b-2217-7301-088a6c30d307");
+            // connection.header("Connection", "keep-alive");
 
             Document doc = connection.get();
+
+            // TO BE FINISHED....
 
             return new ArrayList<Flat>();
         } catch (Exception e) {

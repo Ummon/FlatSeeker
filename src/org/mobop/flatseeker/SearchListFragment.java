@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
@@ -24,6 +25,7 @@ public class SearchListFragment extends Fragment {
 
     Model model;
     ActualSearch actualSearch;
+    ExpandableListView elv;
 
     // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
     public void initSearchListFragment(Model model, ActualSearch actualSearch){
@@ -36,6 +38,7 @@ public class SearchListFragment extends Fragment {
     {
         super.onCreate(savedInstanceState);
 
+        //TODO peut être ici
         this.model = getArguments().getParcelable(Model.class.getName());
         this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
 //        setRetainInstance(true);
@@ -57,8 +60,11 @@ public class SearchListFragment extends Fragment {
     public void onResume(){
         if(searchExpandable==null){return;}
 
+//        elv.setAdapter(searchExpandable);
         createData();
+//        elv.setAdapter(searchExpandable);
         searchExpandable.notifyDataSetChanged();
+
         super.onResume();
     }
     
@@ -66,7 +72,7 @@ public class SearchListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list_layout, null);
 
-        ExpandableListView elv = (ExpandableListView) v.findViewById(R.id.listView);
+        elv = (ExpandableListView) v.findViewById(R.id.listView);
         searchExpandable = new SearchExpandableListAdapter(this,groups,model,actualSearch);
         elv.setAdapter(searchExpandable);
         return v;
@@ -87,7 +93,6 @@ public class SearchListFragment extends Fragment {
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         switch (requestCode){
             case SearchExpandableListAdapter.TAG_NOTE:
                 if(data==null){
@@ -103,8 +108,10 @@ public class SearchListFragment extends Fragment {
                 for(Flat flat : searches){
                     if(flat.equalsWithoutNote(f)){
                         flat.setNote(f.getNote());
+//                        Toast.makeText(getActivity(),f.getNote(),Toast.LENGTH_SHORT).show();
                     }
                 }
+                createData();
                 break;
             default:
                 break;

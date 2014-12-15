@@ -147,7 +147,11 @@ public class MapFragment extends Fragment {
 
                 sb.delete(0, sb.length());
                 sb.append("Room : ").append(flat.numberOfRooms).append("\n");
-                sb.append("Free from : ").append(new SimpleDateFormat("dd/MMMM/yyyy").format(flat.freeFrom)).append("\n");
+                if(flat.freeFrom!=null) {
+                    sb.append("Free from : ").append(new SimpleDateFormat("dd/MMMM/yyyy").format(flat.freeFrom)).append("\n");
+                }else{
+                    sb.append("Free from now\n");
+                }
                 sb.append("Additional expenses : ").append(flat.additionalExpenses).append("\n");
                 sb.append("Price (CHF) : ").append(flat.price).append("\n");
                 sb.append("Floor : ").append(flat.floor).append("\n");

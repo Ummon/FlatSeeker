@@ -10,7 +10,10 @@
         android:id="@+id/noteNoteTbx"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="There is no note, please add one." />
+        android:hint="There is no note, please add one."
+        android:layout_alignEnd="@+id/noteSaveBtn"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:layout_width="wrap_content"

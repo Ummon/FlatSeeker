@@ -22,5 +22,6 @@
     <string name="choose_location">Choose a location</string>
     <string name="hyphen">-</string>
     <string name="room_range">Room</string>
+    <string name="range">Range</string>
 
 </resources>

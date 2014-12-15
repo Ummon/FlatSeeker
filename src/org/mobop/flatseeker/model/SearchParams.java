@@ -50,7 +50,11 @@ public class SearchParams implements Cloneable, Parcelable, Serializable {
         dest.writeDouble(this.numberOfRooms.to);
         dest.writeInt(this.size.from);
         dest.writeInt(this.size.to);
-        dest.writeLong(this.date.getTimeInMillis());
+        if(this.date != null) {
+            dest.writeLong(this.date.getTimeInMillis());
+        } else {
+            dest.writeLong(0);
+        }
     }
 
     private SearchParams (Parcel in) {
@@ -60,7 +64,12 @@ public class SearchParams implements Cloneable, Parcelable, Serializable {
         this.numberOfRooms = new Range<Double>(in.readDouble(),in.readDouble());
         this.size = new Range<Integer>(in.readInt(),in.readInt());
         this.date = Calendar.getInstance();
-        this.date.setTimeInMillis(in.readLong());
+        long date = in.readLong();
+        if (date>0) {
+            this.date.setTimeInMillis(date);
+        }else{
+//            this.date;
+        }
     }
 
     public static final Parcelable.Creator<SearchParams> CREATOR = new Parcelable.Creator<SearchParams>() {

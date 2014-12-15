@@ -11,6 +11,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;

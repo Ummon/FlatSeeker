@@ -90,6 +90,7 @@ public class Flat implements Parcelable, Serializable {
         this.price = in.readInt();
         this.additionalExpenses = in.readInt();
         this.freeFrom = (Date)in.readSerializable();
+//        this.freeFrom = null;
         this.city = in.readString();
         this.street = in.readString();
         this.number = in.readInt();
@@ -119,7 +120,7 @@ public class Flat implements Parcelable, Serializable {
                 this.size == that.size &&
                 this.price == that.price &&
                 this.additionalExpenses == that.additionalExpenses &&
-                this.freeFrom.equals(that.freeFrom) &&
+//                this.freeFrom.equals(that.freeFrom) &&
                 this.number == that.number &&
                 this.floor == that.floor &&
                 this.city.equals(that.city) &&

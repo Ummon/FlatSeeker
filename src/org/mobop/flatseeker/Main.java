@@ -63,22 +63,6 @@ public class Main extends FragmentActivity implements TabListener {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    // 3 buttons in the title
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(main, menu);
-        return true;
-    }
-
-    @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
 //        ft.replace(R.id.pager,fpAdapter.getItem(tab.getPosition()));
@@ -95,8 +79,9 @@ public class Main extends FragmentActivity implements TabListener {
     }
 
     public void onPause() {
-        super.onPause();
         StorageManager.saveModel(model, getApplicationContext());
+        model =StorageManager.loadModel(getApplicationContext());
+        super.onPause();
     }
 
     public void onResume() {

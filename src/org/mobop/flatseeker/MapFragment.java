@@ -131,6 +131,9 @@ public class MapFragment extends Fragment {
 //                map.setMyLocationEnabled(true);
 //                map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
 //
+            if(search.getResult().size()==0){
+                return;
+            }
             StringBuilder sb = new StringBuilder();
             LatLngBounds.Builder builderBounds = new LatLngBounds.Builder();
             for (Flat flat : search.getResult()) {
@@ -142,6 +145,9 @@ public class MapFragment extends Fragment {
                     address = geoCoder.getFromLocationName(sb.toString(), search.getParams().radius).get(0);
                 } catch (IOException e) {
                     e.printStackTrace();
+                }
+                if(address==null){
+                    continue;
                 }
 
 
@@ -156,11 +162,11 @@ public class MapFragment extends Fragment {
                 sb.append("Price (CHF) : ").append(flat.price).append("\n");
                 sb.append("Floor : ").append(flat.floor).append("\n");
                 sb.append("Size(m^2) : ").append(flat.size).append("\n");
-                if(flat.getNote()!=null) {
+                if(flat.getNote() != null && flat.getNote().matches("^\\s*$".intern())) {
                     sb.append("Note : ").append(flat.getNote()).append("\n");
                 }
 
-                assert address != null;
+//                assert address != null;
                 MarkerOptions marker = new MarkerOptions()
                         .title(flat.street + " ".intern() + String.valueOf(flat.number))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.house))
@@ -169,6 +175,7 @@ public class MapFragment extends Fragment {
                 map.addMarker(marker);
                 builderBounds.include(marker.getPosition());
             }
+
             LatLngBounds bounds = builderBounds.build();
             CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 40);//10 = padding
             map.animateCamera(cu);

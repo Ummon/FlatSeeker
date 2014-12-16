@@ -13,12 +13,12 @@
         android:id="@+id/search_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_launcher"
         android:drawablePadding="5dp"
         android:gravity="center_vertical"
         android:textSize="14sp"
         android:textStyle="bold" >
     </TextView>
+        <!--android:drawableStart="@drawable/ic_launcher"-->
 
     <View
         android:layout_width="match_parent"
@@ -149,6 +149,24 @@
             android:layout_height="wrap_content"
             android:text="New Text"
             android:id="@+id/searchFlatContact" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note : "
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Text"
+            android:id="@+id/searchFlatNote" />
     </LinearLayout>
 
 

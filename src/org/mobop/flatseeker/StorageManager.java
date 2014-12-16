@@ -21,7 +21,7 @@ public class StorageManager{
     public static Model loadModel(Context context){
         Model model = (Model)loadObject(FILE_MODEL, context);
 
-        FlatFinder finder = new StubFinder();//new ImmoScout24Finder();
+        FlatFinder finder = new ImmoScout24Finder();
 
         if (model != null) {
             model.setFinder(finder);

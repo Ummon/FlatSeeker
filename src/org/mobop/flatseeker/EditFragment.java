@@ -106,6 +106,7 @@ public class EditFragment extends Fragment {
                 handler = new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
+//                        actualSearch.set(model.getSearches().size()-1);
                         viewPager.setCurrentItem(FragmentPageAdapter.SEARCH_ID);
                         myPd_ring.dismiss();
                     }

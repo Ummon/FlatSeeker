@@ -28,14 +28,13 @@ public class SearchListFragment extends Fragment {
     ExpandableListView elv;
 
     // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
-    public void initSearchListFragment(Model model, ActualSearch actualSearch){
+    public void initSearchListFragment(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //TODO peut être ici
@@ -46,8 +45,7 @@ public class SearchListFragment extends Fragment {
         createData();
     }
 
-    public static final SearchListFragment newInstance(Model model, ActualSearch actualSearch)
-    {
+    public static final SearchListFragment newInstance(Model model, ActualSearch actualSearch) {
         SearchListFragment f = new SearchListFragment();
         Bundle bdl = new Bundle(2);
         bdl.putParcelable(Model.class.getName(), model);
@@ -57,64 +55,56 @@ public class SearchListFragment extends Fragment {
     }
 
     @Override
-    public void onResume(){
-        if(searchExpandable==null){return;}
+    public void onResume() {
+//        if (searchExpandable == null) {
+//            return;
+//        }
 
 //        elv.setAdapter(searchExpandable);
         createData();
+//        searchExpandable = new SearchExpandableListAdapter(this, groups, model, actualSearch);
 //        elv.setAdapter(searchExpandable);
         searchExpandable.notifyDataSetChanged();
+//        searchExpandable.getGroup(actualSearch.get());
 
         super.onResume();
     }
-    
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.list_layout, null);
 
         elv = (ExpandableListView) v.findViewById(R.id.listView);
-        searchExpandable = new SearchExpandableListAdapter(this,groups,model,actualSearch);
+        searchExpandable = new SearchExpandableListAdapter(this, groups, model, actualSearch);
         elv.setAdapter(searchExpandable);
         return v;
     }
 
     public void createData() {
         groups.clear();
-        
+
         Collection<Search> searches = model.getSearches();
         for (Search element : searches) {
             groups.append(groups.size(), element);
         }
+
+//        if (searchExpandable != null) {
+//            elv.setAdapter(searchExpandable);
+//            searchExpandable.notifyDataSetChanged();
+//        }
     }
 
-    public void setModelAndActualSearch(Model model,ActualSearch actualSearch){
+    public void setModelAndActualSearch(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
-            case SearchExpandableListAdapter.TAG_NOTE:
-                if(data==null){
-                    return;
-                }
-                //TODO Ugly as shit, can be better ?
-                // because parcelable send back a copy of our flat, we have to find which flat it is
-                // and set the new note to it.
-                Flat f = data.getParcelableExtra(NoteActivity.NOTE_MESSAGE);
-                List<Search> l = new ArrayList<Search>(model.getSearches());
-                Search s = l.get(actualSearch.get());
-                List<Flat> searches = new ArrayList<Flat>(s.getResult());
-                for(Flat flat : searches){
-                    if(flat.equalsWithoutNote(f)){
-                        flat.setNote(f.getNote());
-//                        Toast.makeText(getActivity(),f.getNote(),Toast.LENGTH_SHORT).show();
-                    }
-                }
-                createData();
-                break;
-            default:
-                break;
+        if (requestCode == SearchExpandableListAdapter.TAG_NOTE) {
+            if (data == null) {
+                return;
+            }
+            createData();
         }
     }
 }

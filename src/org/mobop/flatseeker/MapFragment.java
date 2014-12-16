@@ -156,6 +156,9 @@ public class MapFragment extends Fragment {
                 sb.append("Price (CHF) : ").append(flat.price).append("\n");
                 sb.append("Floor : ").append(flat.floor).append("\n");
                 sb.append("Size(m^2) : ").append(flat.size).append("\n");
+                if(flat.getNote()!=null) {
+                    sb.append("Note : ").append(flat.getNote()).append("\n");
+                }
 
                 assert address != null;
                 MarkerOptions marker = new MarkerOptions()

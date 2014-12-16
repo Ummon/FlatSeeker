@@ -68,6 +68,16 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         roomTbx.setText(String.valueOf(flat.numberOfRooms));
         TextView sizeRoom = (TextView) convertView.findViewById(R.id.searchFlatSize);
         sizeRoom.setText(String.valueOf(flat.size));
+        TextView number = (TextView) convertView.findViewById(R.id.searchFlatNumber);
+        number.setText(String.valueOf(flat.number));
+        TextView floor = (TextView) convertView.findViewById(R.id.searchFlatFloor);
+        floor.setText(String.valueOf(flat.floor));
+        TextView estateAgent = (TextView) convertView.findViewById(R.id.searchFlatEstateAgent);
+        estateAgent.setText(String.valueOf(flat.estateAgent));
+        TextView contact = (TextView) convertView.findViewById(R.id.searchFlatContact);
+        contact.setText(String.valueOf(flat.contact));
+
+//        Toast.makeText(activity,"toto",Toast.LENGTH_SHORT).show();
 
         //start note activity
         convertView.setOnClickListener(new View.OnClickListener() {

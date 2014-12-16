@@ -10,9 +10,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.ImmoStreetFinder;
+import org.mobop.flatseeker.model.Search;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mobop.flatseeker.R.menu.main;
 
@@ -87,12 +93,34 @@ public class Main extends FragmentActivity implements TabListener {
     public void onResume() {
         super.onResume();
         model = StorageManager.loadModel(getApplicationContext());
-        actualSearch = new ActualSearch();
+//        actualSearch = new ActualSearch();
         fpAdapter.setModelAndActualSearch(model, actualSearch);
     }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode){
+            case SearchExpandableListAdapter.TAG_NOTE:
+                if(data==null){
+                    return;
+                }
+                //TODO Ugly as shit, can be better ?
+                // because parcelable send back a copy of our flat, we have to find which flat it is
+                // and set the new note to it.
+                Flat f = data.getParcelableExtra(NoteActivity.NOTE_MESSAGE);
+                List<Search> l = new ArrayList<Search>(model.getSearches());
+                Search s = l.get(actualSearch.get());
+                List<Flat> searches = new ArrayList<Flat>(s.getResult());
+                for(Flat flat : searches){
+                    if(flat.equalsWithoutNote(f)){
+                        flat.setNote(f.getNote());
+                    }
+                }
+                StorageManager.saveModel(model, getApplicationContext());
+                break;
+            default:
+                break;
+        }
         fpAdapter.onActivityResult(requestCode, resultCode, data);
     }
 }

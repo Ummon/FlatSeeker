@@ -27,7 +27,6 @@ public class SearchListFragment extends Fragment {
     ActualSearch actualSearch;
     ExpandableListView elv;
 
-    // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
     public void initSearchListFragment(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
@@ -37,7 +36,7 @@ public class SearchListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //TODO peut être ici
+        //ODOT peut être ici
         this.model = getArguments().getParcelable(Model.class.getName());
         this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
 //        setRetainInstance(true);

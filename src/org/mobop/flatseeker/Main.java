@@ -104,7 +104,7 @@ public class Main extends FragmentActivity implements TabListener {
                 if(data==null){
                     return;
                 }
-                //TODO Ugly as shit, can be better ?
+                //ODOT Ugly as shit, can be better ?
                 // because parcelable send back a copy of our flat, we have to find which flat it is
                 // and set the new note to it.
                 Flat f = data.getParcelableExtra(NoteActivity.NOTE_MESSAGE);

@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Range;
@@ -28,6 +29,7 @@ public class EditFragment extends Fragment {
     ActualSearch actualSearch;
 
     Button save;
+    Button delete;
     EditText cityTbx;
     EditText radiusTbx;
     EditText priceStartTbx;
@@ -127,12 +129,31 @@ public class EditFragment extends Fragment {
             }
         });
 
+        delete = (Button) v.findViewById(R.id.editDeleteButton);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Search> l = new ArrayList<Search>(model.getSearches());
+                model.getSearches().remove(l.get(actualSearch.get()));
+                actualSearch.set(-1);
+
+                viewPager.setCurrentItem(FragmentPageAdapter.SEARCH_ID);
+
+            }
+        });
+
         return v;
     }
 
     public void onResume() {
         super.onResume();
         fill();
+
+        if(actualSearch.get()<=-1){
+            delete.setVisibility(View.INVISIBLE);
+        }else{
+            delete.setVisibility(View.VISIBLE);
+        }
     }
 
     public void setModelAndActualSearch(Model model, ActualSearch actualSearch) {
@@ -154,6 +175,7 @@ public class EditFragment extends Fragment {
             sizeStartTbx.setText(String.valueOf(s.size.from));
             sizeEndTbx.setText(String.valueOf(s.size.to));
         } else {
+            Toast.makeText(getActivity(),"Example values with Neuchatel",Toast.LENGTH_LONG).show();
 //            cityTbx.setText("");
 //            radiusTbx.setText("");
 //            priceStartTbx.setText("");

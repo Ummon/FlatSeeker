@@ -17,6 +17,9 @@ import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Flatseeker MobOp
  * HES-SO
@@ -131,12 +134,18 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
             mExpandableList.collapseGroup(actualSearch.get());
         }
         actualSearch.set(groupPosition);
+
+        List<Search> l = new ArrayList<Search>(model.getSearches());
+        if(l.get(groupPosition).getResult().size()==0) {
+            Toast.makeText(activity, "No flat for this search. Delete it or change it.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
     public long getGroupId(int groupPosition) {
         return 0;
     }
+
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,

@@ -1,10 +1,12 @@
 package org.mobop.flatseeker;
 
 import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.*;
 
@@ -16,14 +18,16 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
     Model model;
     ActualSearch actualSearch;
     ActionBar.Tab actualTab;
+    Context context;
 
     public static final int EDIT_ID = 0;
     public static final int SEARCH_ID = 1;
     public static final int MAP_ID = 2;
 
-    public FragmentPageAdapter(FragmentManager fm, Model model, ActualSearch actualSearch) {
+    public FragmentPageAdapter(FragmentManager fm,Context context, Model model, ActualSearch actualSearch) {
         super(fm);
         this.model = model;
+        this.context = context;
         this.actualSearch = actualSearch;
     }
 
@@ -34,18 +38,14 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
             case EDIT_ID:
                 if (editFragment == null)
                     editFragment = EditFragment.newInstance(model, actualSearch);
-//                editFragment.initEditFragment(model, actualSearch);
                 return editFragment;
             case SEARCH_ID:
                 if (searchListFragment == null)
                     searchListFragment = SearchListFragment.newInstance(model, actualSearch);
-//                searchListFragment.initSearchListFragment(model, actualSearch);
                 return searchListFragment;
             case MAP_ID:
-                //	    return SupportMapFragment.newInstance();
                 if (mapFragment == null)
                     mapFragment = MapFragment.newInstance(model, actualSearch);
-//                mapFragment.initMapFragment(model, actualSearch);
                 return mapFragment;
             default:
                 break;
@@ -78,6 +78,9 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
             case EDIT_ID:
                 if (editFragment != null) {
                     editFragment.onResume();
+                    if(actualSearch.get()==-1) {
+                        Toast.makeText(context,  "Example values with Neuchatel", Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
         }

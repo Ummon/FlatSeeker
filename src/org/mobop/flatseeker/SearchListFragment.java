@@ -9,15 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
-import org.mobop.flatseeker.model.Flat;
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Search;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 public class SearchListFragment extends Fragment {
     SparseArray<Search> groups = new SparseArray<Search>();
@@ -36,10 +32,8 @@ public class SearchListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //ODOT peut être ici
         this.model = getArguments().getParcelable(Model.class.getName());
         this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
-//        setRetainInstance(true);
 
         createData();
     }
@@ -55,18 +49,16 @@ public class SearchListFragment extends Fragment {
 
     @Override
     public void onResume() {
-//        if (searchExpandable == null) {
-//            return;
-//        }
-
-//        elv.setAdapter(searchExpandable);
         createData();
-//        searchExpandable = new SearchExpandableListAdapter(this, groups, model, actualSearch);
-//        elv.setAdapter(searchExpandable);
+
         searchExpandable.notifyDataSetChanged();
-//        searchExpandable.getGroup(actualSearch.get());
 
         super.onResume();
+
+        for(int i=0;i<model.getSearches().size()-1;i++){
+            elv.collapseGroup(i);
+        }
+        actualSearch.set(-1);
     }
 
     @Override
@@ -76,6 +68,7 @@ public class SearchListFragment extends Fragment {
         elv = (ExpandableListView) v.findViewById(R.id.listView);
         searchExpandable = new SearchExpandableListAdapter(this, groups, model, actualSearch);
         elv.setAdapter(searchExpandable);
+
         return v;
     }
 
@@ -86,11 +79,6 @@ public class SearchListFragment extends Fragment {
         for (Search element : searches) {
             groups.append(groups.size(), element);
         }
-
-//        if (searchExpandable != null) {
-//            elv.setAdapter(searchExpandable);
-//            searchExpandable.notifyDataSetChanged();
-//        }
     }
 
     public void setModelAndActualSearch(Model model, ActualSearch actualSearch) {

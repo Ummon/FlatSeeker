@@ -36,7 +36,7 @@ public class Main extends FragmentActivity implements TabListener {
 
         model = StorageManager.loadModel(getApplicationContext());
         actualSearch = new ActualSearch();
-        fpAdapter = new FragmentPageAdapter(getSupportFragmentManager(), model, actualSearch);
+        fpAdapter = new FragmentPageAdapter(getSupportFragmentManager(),getApplicationContext(), model, actualSearch);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(fpAdapter);
 
@@ -46,9 +46,6 @@ public class Main extends FragmentActivity implements TabListener {
         actionBar.addTab(actionBar.newTab().setText("Edit").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("List").setTabListener(this));
         actionBar.addTab(actionBar.newTab().setText("Map").setTabListener(this));
-
-        //	GoogleMap googleMap;
-        //	googleMap = ((SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
 
         viewPager.requestTransparentRegion(viewPager);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -71,7 +68,6 @@ public class Main extends FragmentActivity implements TabListener {
     @Override
     public void onTabSelected(Tab tab, FragmentTransaction ft) {
 
-//        ft.replace(R.id.pager,fpAdapter.getItem(tab.getPosition()));
         fpAdapter.refresh(tab);
         viewPager.setCurrentItem(tab.getPosition());
     }
@@ -93,7 +89,6 @@ public class Main extends FragmentActivity implements TabListener {
     public void onResume() {
         super.onResume();
         model = StorageManager.loadModel(getApplicationContext());
-//        actualSearch = new ActualSearch();
         fpAdapter.setModelAndActualSearch(model, actualSearch);
     }
 
@@ -104,7 +99,6 @@ public class Main extends FragmentActivity implements TabListener {
                 if(data==null){
                     return;
                 }
-                //ODOT Ugly as shit, can be better ?
                 // because parcelable send back a copy of our flat, we have to find which flat it is
                 // and set the new note to it.
                 Flat f = data.getParcelableExtra(NoteActivity.NOTE_MESSAGE);

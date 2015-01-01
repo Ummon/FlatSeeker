@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Range;
@@ -43,7 +42,6 @@ public class EditFragment extends Fragment {
     ProgressDialog myPd_ring;
     Handler handler;
 
-    // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
     public void initEditFragment(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
@@ -54,13 +52,10 @@ public class EditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         this.model = getArguments().getParcelable(Model.class.getName());
         this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
-//        setRetainInstance(true);
     }
 
     public static final EditFragment newInstance(Model model, ActualSearch actualSearch) {
         EditFragment f = new EditFragment();
-//        f.model = model;
-//        f.actualSearch = actualSearch;
         Bundle bdl = new Bundle(2);
         bdl.putParcelable(Model.class.getName(), model);
         bdl.putParcelable(ActualSearch.class.getName(), actualSearch);
@@ -108,7 +103,6 @@ public class EditFragment extends Fragment {
                 handler = new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
-//                        actualSearch.set(model.getSearches().size()-1);
                         viewPager.setCurrentItem(FragmentPageAdapter.SEARCH_ID);
                         myPd_ring.dismiss();
                     }
@@ -120,6 +114,11 @@ public class EditFragment extends Fragment {
                     @Override
                     public void run() {
                         try {
+                            if(actualSearch.get()>-1) {
+                                List<Search> l = new ArrayList<Search>(model.getSearches());
+                                model.getSearches().remove(l.get(actualSearch.get()));
+                            }
+                            actualSearch.set(model.getSearches().size());
                             model.newSearch(test);
                         } catch (Exception e) {
                         }
@@ -175,7 +174,7 @@ public class EditFragment extends Fragment {
             sizeStartTbx.setText(String.valueOf(s.size.from));
             sizeEndTbx.setText(String.valueOf(s.size.to));
         } else {
-            Toast.makeText(getActivity(),"Example values with Neuchatel",Toast.LENGTH_LONG).show();
+
 //            cityTbx.setText("");
 //            radiusTbx.setText("");
 //            priceStartTbx.setText("");

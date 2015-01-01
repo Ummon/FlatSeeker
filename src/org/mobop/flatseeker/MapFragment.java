@@ -40,7 +40,6 @@ public class MapFragment extends Fragment {
     SupportMapFragment mSupportMapFragment;
 
 
-    // TODO change to http://stackoverflow.com/questions/10450348/do-fragments-really-need-an-empty-constructor
     public void initMapFragment(Model model, ActualSearch actualSearch) {
         this.model = model;
         this.actualSearch = actualSearch;
@@ -49,16 +48,12 @@ public class MapFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Toast.makeText(getActivity(),"okokokok",Toast.LENGTH_SHORT).show();
         this.model = getArguments().getParcelable(Model.class.getName());
         this.actualSearch = getArguments().getParcelable(ActualSearch.class.getName());
-//        setRetainInstance(true);
     }
 
     public static final MapFragment newInstance(Model model, ActualSearch actualSearch) {
         MapFragment f = new MapFragment();
-//        f.model = model;
-//        f.actualSearch = actualSearch;
         Bundle bdl = new Bundle(2);
         bdl.putParcelable(Model.class.getName(), model);
         bdl.putParcelable(ActualSearch.class.getName(), actualSearch);
@@ -76,13 +71,6 @@ public class MapFragment extends Fragment {
                     map = mSupportMapFragment.getMap();
                     map.setMyLocationEnabled(true);
                     map.setInfoWindowAdapter(new PopupAdapter(inflater));
-                    map.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                        @Override
-                        public void onMapLongClick(LatLng latLng) {
-//                            Toast.makeText(getActivity().getApplicationContext(), "bitch", Toast.LENGTH_LONG).show();
-                        }
-                    });
-
                     refreshPosition();
                 }
 
@@ -109,7 +97,6 @@ public class MapFragment extends Fragment {
             List<Search> l = new ArrayList<Search>(model.getSearches());
             Search search = l.get(actualSearch.get());
 
-            // TODO
             try {
                 SearchParams params = search.getParams();
                 Address address = geoCoder.getFromLocationName(params.city, params.radius).get(0);
@@ -119,18 +106,6 @@ public class MapFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            // You can customize the marker image using images bundled with
-            // your app, or dynamically generated bitmaps. 
-//                        map.addMarker(new MarkerOptions()
-//                                .icon(BitmapDescriptorFactory.fromResource(R.drawable.house))
-//                                .anchor(0.0f, 1.0f) // Anchors the marker on the bottom left
-//                                .position(new LatLng(41.889, -87.622)));
-
-//                LatLng sydney = new LatLng(-33.867, 151.206);
-//
-//                map.setMyLocationEnabled(true);
-//                map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
-//
             if(search.getResult().size()==0){
                 return;
             }
@@ -166,7 +141,6 @@ public class MapFragment extends Fragment {
                     sb.append("Note : ").append(flat.getNote()).append("\n");
                 }
 
-//                assert address != null;
                 MarkerOptions marker = new MarkerOptions()
                         .title(flat.street + " ".intern() + String.valueOf(flat.number))
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.house))

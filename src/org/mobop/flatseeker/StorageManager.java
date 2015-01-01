@@ -4,9 +4,7 @@ import android.content.Context;
 
 import org.mobop.flatseeker.model.FlatFinder;
 import org.mobop.flatseeker.model.ImmoScout24Finder;
-import org.mobop.flatseeker.model.ImmoStreetFinder;
 import org.mobop.flatseeker.model.Model;
-import org.mobop.flatseeker.model.StubFinder;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -30,10 +28,6 @@ public class StorageManager{
 
         return new Model(finder);
     }
-
-//    public static ActualSearch loadActualSearch(){
-//
-//    }
 
     public static void saveModel(Model model,Context context){
         saveObject(FILE_MODEL, model, context);

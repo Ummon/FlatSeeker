@@ -55,7 +55,7 @@ public class SearchListFragment extends Fragment {
 
         super.onResume();
 
-        for(int i=0;i<model.getSearches().size()-1;i++){
+        for(int i=0;i<model.getSearches().size();i++){
             elv.collapseGroup(i);
         }
         actualSearch.set(-1);

@@ -28,7 +28,7 @@ public class EditFragment extends Fragment {
     Model model;
     ActualSearch actualSearch;
 
-    boolean isDebug = true;
+    boolean isDebug = false;
 
     Button save;
     Button delete;

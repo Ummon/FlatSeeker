@@ -72,15 +72,15 @@ public class FragmentPageAdapter extends FragmentPagerAdapter {
             case MAP_ID:
                 if (mapFragment != null) {
                     mapFragment.refreshPosition();
+                    if(actualSearch.get()==-1) {
+                        Toast.makeText(context, "No search selected", Toast.LENGTH_LONG).show();
+                    }
                 }
                 break;
 
             case EDIT_ID:
                 if (editFragment != null) {
                     editFragment.onResume();
-                    if(actualSearch.get()==-1) {
-                        Toast.makeText(context,  "Example values with Neuchatel", Toast.LENGTH_LONG).show();
-                    }
                 }
                 break;
         }

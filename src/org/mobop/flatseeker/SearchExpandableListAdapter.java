@@ -70,7 +70,7 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         TextView roomTbx = (TextView) convertView.findViewById(R.id.searchFlatRoom);
         roomTbx.setText(String.valueOf(flat.numberOfRooms));
         TextView sizeRoom = (TextView) convertView.findViewById(R.id.searchFlatSize);
-        sizeRoom.setText(String.valueOf(flat.size) + "m²");
+        sizeRoom.setText(String.valueOf(flat.size) + " m²");
         TextView number = (TextView) convertView.findViewById(R.id.searchFlatNumber);
         number.setText(String.valueOf(flat.number));
         TextView floor = (TextView) convertView.findViewById(R.id.searchFlatFloor);

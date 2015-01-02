@@ -71,7 +71,7 @@ public class MapFragment extends Fragment {
                     map = mSupportMapFragment.getMap();
                     map.setMyLocationEnabled(true);
                     map.setInfoWindowAdapter(new PopupAdapter(inflater));
-                    //refreshPosition();
+                    refreshPosition();
                 }
 
             };

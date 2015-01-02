@@ -34,7 +34,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Price : " />
+            android:text="Price: " />
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,7 +87,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Number : "
+            android:text="Street number: "
             />
 
         <TextView
@@ -105,7 +105,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Floor : "
+            android:text="Floor: "
             />
 
         <TextView
@@ -123,7 +123,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estate agent : "
+            android:text="Estate agent: "
             />
 
         <TextView
@@ -141,7 +141,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact : "
+            android:text="Contact: "
             />
 
         <TextView
@@ -159,7 +159,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Note : "
+            android:text="Note: "
             />
 
         <TextView

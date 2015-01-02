@@ -33,6 +33,7 @@ public class ImmoScout24Finder extends FlatFinder {
     static final String CHARSET = "UTF-8";
     static final int TIMEOUT_REQUEST = 6000; // [ms]. (6 s).
     static final int MAX_NUMBER_FLAT_RESULT = 3; // 3 is for testing.
+    static final String URL = "www.immoscout24.ch";
 
     public ImmoScout24Finder() {}
 
@@ -75,7 +76,7 @@ public class ImmoScout24Finder extends FlatFinder {
 
         final String trimmedLocation = location.trim().toLowerCase();
 
-        String urlStr = "http://www.immoscout24.ch/public/search/getlocations";
+        String urlStr = String.format("http://%s/public/search/getlocations", URL);
 
         // Build the body of the POST message.
         Gson gson = new Gson();
@@ -86,7 +87,7 @@ public class ImmoScout24Finder extends FlatFinder {
         connection.setRequestMethod("POST");
         connection.setConnectTimeout(TIMEOUT_REQUEST);
 
-        connection.addRequestProperty("Host", "www.immoscout24.ch");
+        connection.addRequestProperty("Host", URL);
         connection.addRequestProperty("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0");
         connection.addRequestProperty("Accept", "application/json, text/javascript, */*; q=0.01");
         connection.addRequestProperty("Accept-Language", "en-US,en;q=0.5");
@@ -124,7 +125,7 @@ public class ImmoScout24Finder extends FlatFinder {
      */
     private List<String> getUrls(final SearchParams params, final int locationID) throws IOException {
 
-        String urlStr = "http://www.immoscout24.ch/fr/recherche/?";
+        String urlStr = String.format("http://%s/fr/recherche/?", URL);
         urlStr += URLEncodedUtils.format(
                 new ArrayList<BasicNameValuePair>() {{
                     add(new BasicNameValuePair("s", "2"));
@@ -157,7 +158,7 @@ public class ImmoScout24Finder extends FlatFinder {
         connection.setRequestMethod("POST");
         connection.setConnectTimeout(TIMEOUT_REQUEST);
 
-        connection.addRequestProperty("Host", "www.immoscout24.ch");
+        connection.addRequestProperty("Host", URL);
         connection.addRequestProperty("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0");
         connection.addRequestProperty("Accept", "application/json, text/javascript, */*; q=0.01");
         connection.addRequestProperty("Accept-Language", "en-US,en;q=0.5");
@@ -194,7 +195,7 @@ public class ImmoScout24Finder extends FlatFinder {
             Elements elements = doc.select(".item-title");
 
             for (Element element : elements) {
-                urlsResult.add("http://www.immoscout24.ch" + element.attr("href"));
+                urlsResult.add("http://" + URL + element.attr("href"));
             }
         }
 
@@ -203,9 +204,9 @@ public class ImmoScout24Finder extends FlatFinder {
 
     static Pattern addressPattern = Pattern.compile("^\\s*(.*?)(\\d*)\\s*$");
     static Pattern numberPattern = Pattern.compile("^(?:.*?)(\\d+).*$");
-    // static Pattern numberPattern = Pattern.compile("^\\s*(\\d+)\\s*$"); // Old version, a bit less powerfull.
+    // static Pattern numberPattern = Pattern.compile("^\\s*(\\d+)\\s*$"); // Old version, a bit less powerful.
     static Pattern freeNowPattern = Pattern.compile("^\\s*Immédiatement\\s*");
-    static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     /**
      * Load the given URL and parse the result as a flat.
@@ -214,7 +215,7 @@ public class ImmoScout24Finder extends FlatFinder {
         Connection connection = Jsoup.connect(url);
         connection.timeout(TIMEOUT_REQUEST);
 
-        connection.header("Host", "www.immoscout24.ch");
+        connection.header("Host", URL);
         connection.header("User-Agent", "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:34.0) Gecko/20100101 Firefox/34.0");
         connection.header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
         connection.header("Accept-Language", "en-US,en;q=0.5");
@@ -302,7 +303,7 @@ public class ImmoScout24Finder extends FlatFinder {
 
             List<Flat> flatsResult = new ArrayList<Flat>();
 
-            // TODO: parallelize with http://developer.android.com/reference/java/util/concurrent/ExecutorService.html.
+            // Here it is possible to parallelize the requests with http://developer.android.com/reference/java/util/concurrent/ExecutorService.html.
             int i = 0;
             for (String url : urls) {
                 Flat flat = this.getFlat(url);

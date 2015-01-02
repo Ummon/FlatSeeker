@@ -24,7 +24,7 @@ public class Model implements Parcelable, Serializable {
             s.setModel(this);
             searches.add(s);
         }
-        this.finder = new ImmoStreetFinder(); // Default finder.
+        this.finder = new ImmoScout24Finder(); // Default finder.
     }
 
     public Collection<Search> getSearches() {

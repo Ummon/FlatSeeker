@@ -66,11 +66,11 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         TextView streetTbx = (TextView) convertView.findViewById(R.id.search_row);
         streetTbx.setText(flat.street);
         TextView priceTbx = (TextView) convertView.findViewById(R.id.searchFlatPrice);
-        priceTbx.setText(String.valueOf(flat.price));
+        priceTbx.setText(String.valueOf(flat.price) + " CHF");
         TextView roomTbx = (TextView) convertView.findViewById(R.id.searchFlatRoom);
         roomTbx.setText(String.valueOf(flat.numberOfRooms));
         TextView sizeRoom = (TextView) convertView.findViewById(R.id.searchFlatSize);
-        sizeRoom.setText(String.valueOf(flat.size));
+        sizeRoom.setText(String.valueOf(flat.size) + "m²");
         TextView number = (TextView) convertView.findViewById(R.id.searchFlatNumber);
         number.setText(String.valueOf(flat.number));
         TextView floor = (TextView) convertView.findViewById(R.id.searchFlatFloor);
@@ -136,8 +136,8 @@ public class SearchExpandableListAdapter extends BaseExpandableListAdapter {
         actualSearch.set(groupPosition);
 
         List<Search> l = new ArrayList<Search>(model.getSearches());
-        if(l.get(groupPosition).getResult().size()==0) {
-            Toast.makeText(activity, "No flat for this search. Delete it or change it.", Toast.LENGTH_LONG).show();
+        if (groupPosition < l.size() && l.get(groupPosition).getResult().isEmpty()) {
+            Toast.makeText(activity, "No flat for this search. Delete it or modify it.", Toast.LENGTH_LONG).show();
         }
     }
 

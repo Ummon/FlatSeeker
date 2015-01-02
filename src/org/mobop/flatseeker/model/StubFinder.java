@@ -1,8 +1,5 @@
 package org.mobop.flatseeker.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;

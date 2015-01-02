@@ -108,7 +108,7 @@ public class EditFragment extends Fragment {
                     }
                 };
 
-                myPd_ring = ProgressDialog.show(getActivity(), "Please wait", "Loading flats, please wait..", true);
+                myPd_ring = ProgressDialog.show(getActivity(), "Please wait", "Searching flats, please wait..", true);
                 myPd_ring.setCancelable(true);
                 new Thread(new Runnable() {
                     @Override

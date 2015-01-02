@@ -71,7 +71,7 @@ public class MapFragment extends Fragment {
                     map = mSupportMapFragment.getMap();
                     map.setMyLocationEnabled(true);
                     map.setInfoWindowAdapter(new PopupAdapter(inflater));
-                    refreshPosition();
+                    //refreshPosition();
                 }
 
             };
@@ -151,7 +151,7 @@ public class MapFragment extends Fragment {
             }
 
             LatLngBounds bounds = builderBounds.build();
-            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 40);//10 = padding
+            CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 40);
             map.animateCamera(cu);
         }
     }

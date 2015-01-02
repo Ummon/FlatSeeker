@@ -28,11 +28,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Implementation of a 'FlatFinder' for the website http://www.immoscout24.ch.
+ */
 public class ImmoScout24Finder extends FlatFinder {
 
     static final String CHARSET = "UTF-8";
     static final int TIMEOUT_REQUEST = 6000; // [ms]. (6 s).
-    static final int MAX_NUMBER_FLAT_RESULT = 3; // 3 is for testing.
+    static final int MAX_NUMBER_FLAT_RESULT = 5; // 5 is for testing.
     static final String URL = "www.immoscout24.ch";
 
     public ImmoScout24Finder() {}

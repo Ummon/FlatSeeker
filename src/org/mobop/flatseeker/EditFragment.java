@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.mobop.flatseeker.model.Model;
 import org.mobop.flatseeker.model.Range;
@@ -26,6 +27,8 @@ public class EditFragment extends Fragment {
 
     Model model;
     ActualSearch actualSearch;
+
+    boolean isDebug = true;
 
     Button save;
     Button delete;
@@ -118,7 +121,7 @@ public class EditFragment extends Fragment {
                                 List<Search> l = new ArrayList<Search>(model.getSearches());
                                 model.getSearches().remove(l.get(actualSearch.get()));
                             }
-                            actualSearch.set(model.getSearches().size());
+                            actualSearch.set(-1);
                             model.newSearch(test);
                         } catch (Exception e) {
                         }
@@ -162,6 +165,7 @@ public class EditFragment extends Fragment {
 
     private void fill() {
         if (actualSearch.get() > -1) {
+
             List<Search> l = new ArrayList<Search>(model.getSearches());
             SearchParams s = l.get(actualSearch.get()).getParams();
 
@@ -173,16 +177,15 @@ public class EditFragment extends Fragment {
             roomEndTbx.setText(String.valueOf(s.numberOfRooms.to));
             sizeStartTbx.setText(String.valueOf(s.size.from));
             sizeEndTbx.setText(String.valueOf(s.size.to));
-        } else {
-
-//            cityTbx.setText("");
-//            radiusTbx.setText("");
-//            priceStartTbx.setText("");
-//            priceEndTbx.setText("");
-//            roomStartTbx.setText("");
-//            roomEndTbx.setText("");
-//            sizeStartTbx.setText("");
-//            sizeEndTbx.setText("");
+        } else if(!isDebug){
+            cityTbx.setText("");
+            radiusTbx.setText("");
+            priceStartTbx.setText("");
+            priceEndTbx.setText("");
+            roomStartTbx.setText("");
+            roomEndTbx.setText("");
+            sizeStartTbx.setText("");
+            sizeEndTbx.setText("");
         }
     }
 }

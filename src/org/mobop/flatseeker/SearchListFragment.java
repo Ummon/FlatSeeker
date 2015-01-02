@@ -79,6 +79,11 @@ public class SearchListFragment extends Fragment {
         for (Search element : searches) {
             groups.append(groups.size(), element);
         }
+
+//        if (searchExpandable != null) {
+//            elv.setAdapter(searchExpandable);
+//            searchExpandable.notifyDataSetChanged();
+//        }
     }
 
     public void setModelAndActualSearch(Model model, ActualSearch actualSearch) {
